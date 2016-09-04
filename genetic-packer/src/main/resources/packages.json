@@ -1,0 +1,34 @@
+{
+  "numberOfGenerations": 1000,
+  "generationSize": 50,
+  "numberOfTopIndividuals": 10,
+  "embryo": {
+    "container": {
+      "width": 180,
+      "height": 220,
+      "depth": 400
+    },
+    "boxes": [
+      {
+        "width": 100,
+        "height": 100,
+        "depth": 100
+      },
+      {
+        "width": 100,
+        "height": 100,
+        "depth": 100
+      },
+      {
+        "width": 100,
+        "height": 100,
+        "depth": 100
+      },
+      {
+        "width": 100,
+        "height": 100,
+        "depth": 100
+      }
+    ]
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "numberOfGenerations": 100,
+  "generationSize": 50,
+  "numberOfTopIndividuals": 100,
+  "embryo": {
+    "container": {
+      "width": 180,
+      "height": 220,
+      "depth": 400
+    },
+    "boxes": [
+      {
+        "width": 50,
+        "height": 100,
+        "depth": 100
+      },
+      {
+        "width": 50,
+        "height": 100,
+        "depth": 100
+      },
+      {
+        "width": 50,
+        "height": 100,
+        "depth": 100
+      },
+      {
+        "width": 100,
+        "height": 100,
+        "depth": 100
+      },
+      {
+        "width": 50,
+        "height": 100,
+        "depth": 100
+      },
+      {
+        "width": 50,
+        "height": 100,
+        "depth": 100
+      },
+      {
+        "width": 10,
+        "height": 100,
+        "depth": 100
+      },
+      {
+        "width": 10,
+        "height": 100,
+        "depth": 100
+      },
+      {
+        "width": 10,
+        "height": 100,
+        "depth": 100
+      },
+      {
+        "width": 10,
+        "height": 100,
+        "depth": 100
+      },
+      {
+        "width": 10,
+        "height": 100,
+        "depth": 100
+      },
+      {
+        "width": 10,
+        "height": 100,
+        "depth": 100
+      },
+      {
+        "width": 10,
+        "height": 100,
+        "depth": 100
+      }
+    ]
+  }
+}
