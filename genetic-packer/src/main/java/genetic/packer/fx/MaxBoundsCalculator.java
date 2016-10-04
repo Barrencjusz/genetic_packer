@@ -10,10 +10,10 @@ import java.util.function.BiFunction;
 @Component
 public class MaxBoundsCalculator implements BiFunction<Double, Double, Integer> {
 
-    private static final int BOUNDS_ADJUSTMENT = 1;
+//    private static final int BOUNDS_ADJUSTMENT = 1;
 
     @Override
     public Integer apply(Double boundsMax, Double boxSize) {
-        return (int) (boundsMax - boxSize) + BOUNDS_ADJUSTMENT;
+        return (int) (boundsMax - boxSize)/* + BOUNDS_ADJUSTMENT*/;
     }
 }

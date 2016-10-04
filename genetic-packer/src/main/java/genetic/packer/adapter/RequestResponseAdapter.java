@@ -58,7 +58,7 @@ public class RequestResponseAdapter implements BiFunction<RequestDto, ParamsDto,
                                     .withFitness(detailedIndividual.getFitness())
                                     .withTranslatedBoxes(detailedIndividual
                                             .get()
-                                            .getBoxes()
+                                            .getCells()
                                             .stream()
                                             .map(boxMapper::map)
                                             .collect(Collectors.toList())

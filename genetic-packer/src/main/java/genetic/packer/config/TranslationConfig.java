@@ -15,17 +15,17 @@ import java.util.function.Function;
 public class TranslationConfig {
 
     @Bean
-    public BiConsumer<Box, Integer> xTranslationSetter() {
+    public BiConsumer<Box, Double> xTranslationSetter() {
         return Box::setTranslateX;
     }
 
     @Bean
-    public BiConsumer<Box, Integer> yTranslationSetter() {
+    public BiConsumer<Box, Double> yTranslationSetter() {
         return Box::setTranslateY;
     }
 
     @Bean
-    public BiConsumer<Box, Integer> zTranslationSetter() {
+    public BiConsumer<Box, Double> zTranslationSetter() {
         return Box::setTranslateZ;
     }
 

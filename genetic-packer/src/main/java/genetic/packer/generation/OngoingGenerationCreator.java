@@ -35,9 +35,9 @@ public class OngoingGenerationCreator implements BiFunction<Generation, GeneticC
         final PairSelector.Context<Double, Individual> context = new PairSelector.Context<>(generation.getRatedIndividuals(), PairSelector.Context.HALF);
         final Collection<Map.Entry<Individual, Individual>> selectedPairs = pairSelector.select(context);
         return selectedPairs.stream()
-                .map(recombinate(evolutionContext)) //FIXME return function by recombinator?
+                .map(recombinate(evolutionContext))
                 .flatMap(pair -> ImmutableList.of(pair.getKey(), pair.getValue()).stream())
-                .peek(mutator) //FIXME context
+                .peek(mutator)
                 .collect(Collectors.toList());
     }
 

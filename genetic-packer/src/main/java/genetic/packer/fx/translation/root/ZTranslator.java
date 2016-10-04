@@ -16,7 +16,7 @@ import java.util.function.Function;
 public class ZTranslator extends BoxRootBasedTranslator {
 
     @Autowired
-    public ZTranslator(@Qualifier("zTranslationSetter") BiConsumer<Box, Integer> zTranslationSetter, Function<Bounds, Double> zBoundsGetter) {
+    public ZTranslator(@Qualifier("zTranslationSetter") BiConsumer<Box, Double> zTranslationSetter, Function<Bounds, Double> zBoundsGetter) {
         super(zTranslationSetter, zBoundsGetter);
     }
 }

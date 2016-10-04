@@ -1,10 +1,8 @@
 package genetic.packer.generation.dto;
 
-import javafx.scene.Group;
-import javafx.scene.shape.Box;
+import genetic.packer.fx.Cell;
 import net.karneim.pojobuilder.GeneratePojoBuilder;
 
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -13,13 +11,13 @@ import java.util.List;
 @GeneratePojoBuilder
 public class Individual {
 
-    private List<Box> boxes;
+    private List<Cell> cells;
 
-    public List<Box> getBoxes() {
-        return boxes;
+    public List<Cell> getCells() {
+        return cells;
     }
 
-    public void setBoxes(List<Box> boxes) {
-        this.boxes = boxes;
+    public void setCells(List<Cell> cells) {
+        this.cells = cells;
     }
 }

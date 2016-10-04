@@ -13,11 +13,11 @@ import java.util.function.Function;
  */
 public abstract class BoxRootBasedTranslator implements BiConsumer<Box, Integer> {
 
-    private BiConsumer<Box, Integer> translationSetter;
+    private BiConsumer<Box, Double> translationSetter;
 
     private Function<Bounds, Double> boundsGetter;
 
-    public BoxRootBasedTranslator(BiConsumer<Box, Integer> translationSetter, Function<Bounds, Double> boundsGetter) {
+    public BoxRootBasedTranslator(BiConsumer<Box, Double> translationSetter, Function<Bounds, Double> boundsGetter) {
         this.translationSetter = translationSetter;
         this.boundsGetter = boundsGetter;
     }
@@ -27,7 +27,7 @@ public abstract class BoxRootBasedTranslator implements BiConsumer<Box, Integer>
         translationSetter.accept(box, createTranslation(box, position));
     }
 
-    private int createTranslation(Box box, Integer position) {
-        return (int) (position + boundsGetter.apply(box.getBoundsInParent()) / 2);
+    private double createTranslation(Box box, Integer position) {
+        return position + boundsGetter.apply(box.getBoundsInParent()) / 2;
     }
 }

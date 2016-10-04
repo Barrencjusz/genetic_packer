@@ -15,6 +15,8 @@ public class Generation<V extends Comparable<V>, T> {
 
     private Collection<RatedIndividual<V, T>> ratedIndividuals;
 
+    private Collection<Individual> rawIndividuals;
+
     public Integer getId() {
         return id;
     }
@@ -29,5 +31,13 @@ public class Generation<V extends Comparable<V>, T> {
 
     public void setRatedIndividuals(Collection<RatedIndividual<V, T>> ratedIndividuals) {
         this.ratedIndividuals = ratedIndividuals;
+    }
+
+    public Collection<Individual> getRawIndividuals() {
+        return rawIndividuals;
+    }
+
+    public void setRawIndividuals(Collection<Individual> rawIndividuals) {
+        this.rawIndividuals = rawIndividuals;
     }
 }

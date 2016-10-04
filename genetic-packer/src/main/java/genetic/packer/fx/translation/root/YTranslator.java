@@ -16,7 +16,7 @@ import java.util.function.Function;
 public class YTranslator extends BoxRootBasedTranslator {
 
     @Autowired
-    public YTranslator(@Qualifier("yTranslationSetter") BiConsumer<Box, Integer> yTranslationSetter, Function<Bounds, Double> yBoundsGetter) {
+    public YTranslator(@Qualifier("yTranslationSetter") BiConsumer<Box, Double> yTranslationSetter, Function<Bounds, Double> yBoundsGetter) {
         super(yTranslationSetter, yBoundsGetter);
     }
 }

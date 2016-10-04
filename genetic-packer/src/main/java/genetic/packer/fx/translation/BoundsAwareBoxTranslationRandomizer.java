@@ -35,9 +35,9 @@ public class BoundsAwareBoxTranslationRandomizer implements BiConsumer<Box, Boun
     //TODO refactor - method references
     public void accept(Box box, Bounds bounds) {
 
-        final int xPosition = random.get().nextInt(maxBoundsCalculator.apply(bounds.getMaxX(), box.getWidth()));
-        final int yPosition = random.get().nextInt(maxBoundsCalculator.apply(bounds.getMaxY(), box.getHeight()));
-        final int zPosition = random.get().nextInt(maxBoundsCalculator.apply(bounds.getMaxZ(), box.getDepth()));
+        final int xPosition = random.get().nextInt(maxBoundsCalculator.apply(bounds.getMaxX(), box.getWidth()) + 1);
+        final int yPosition = random.get().nextInt(maxBoundsCalculator.apply(bounds.getMaxY(), box.getHeight()) + 1);
+        final int zPosition = random.get().nextInt(maxBoundsCalculator.apply(bounds.getMaxZ(), box.getDepth()) + 1);
 
         xTranslator.accept(box, xPosition);
         yTranslator.accept(box, yPosition);

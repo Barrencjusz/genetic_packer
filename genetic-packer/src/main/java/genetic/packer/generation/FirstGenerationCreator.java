@@ -25,7 +25,8 @@ public class FirstGenerationCreator implements BiFunction<Embryo, Integer, Colle
 
     @Override
     public Collection<Individual> apply(Embryo embryo, Integer size) {
-        return Stream.generate(individualCreator.apply(embryo)).limit(size).collect(Collectors.toList());
+        return Stream.generate(individualCreator.apply(embryo))
+            .limit(size)
+            .collect(Collectors.toList());
     }
-
 }

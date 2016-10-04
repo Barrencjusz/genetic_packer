@@ -14,6 +14,6 @@ import java.util.function.Function;
 public abstract class PackerContextMapper implements Function<Packer.Context, GeneticContext> {
 
     @Override
-    @Mapping(target = "chromosomeSize", expression = "java(context.getEmbryo().getBoxes().size())")
+    @Mapping(target = "chromosomeSize", expression = "java(context.getEmbryo().getCells().size())")
     public abstract GeneticContext apply(Packer.Context context);
 }

@@ -13,6 +13,10 @@ public abstract class BoxCloningMapper implements Function<Box, Box> {
 
     @Override
     public Box apply(Box box) {
-        return new Box();
+        final Box clonedBox = new Box(box.getWidth(), box.getHeight(), box.getDepth());
+        clonedBox.setTranslateX(box.getTranslateX());
+        clonedBox.setTranslateY(box.getTranslateY());
+        clonedBox.setTranslateZ(box.getTranslateZ());
+        return clonedBox;
     }
 }

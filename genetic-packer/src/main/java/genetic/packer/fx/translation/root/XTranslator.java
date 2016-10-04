@@ -17,7 +17,7 @@ import java.util.function.Function;
 public class XTranslator extends BoxRootBasedTranslator {
 
     @Autowired
-    public XTranslator(@Qualifier("xTranslationSetter") BiConsumer<Box, Integer> setter, Function<Bounds, Double> xBoundsGetter) {
-        super(setter, xBoundsGetter);
+    public XTranslator(@Qualifier("xTranslationSetter") BiConsumer<Box, Double> xTranslationSetter, Function<Bounds, Double> xBoundsGetter) {
+        super(xTranslationSetter, xBoundsGetter);
     }
 }
