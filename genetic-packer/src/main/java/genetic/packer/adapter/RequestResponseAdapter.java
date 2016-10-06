@@ -5,16 +5,21 @@ import genetic.packer.PackerContextBuilder;
 import genetic.packer.dto.request.ContainerDto;
 import genetic.packer.dto.request.ParamsDto;
 import genetic.packer.dto.request.RequestDto;
+import genetic.packer.dto.response.IndividualDto;
 import genetic.packer.dto.response.IndividualDtoBuilder;
 import genetic.packer.dto.response.ResponseDto;
 import genetic.packer.dto.response.ResponseDtoBuilder;
-import genetic.packer.generation.dto.EmbryoBuilder;
-import genetic.packer.generation.dto.Individual;
+import genetic.packer.evolution.generation.dto.EmbryoBuilder;
+import genetic.packer.fx.Cell;
+import genetic.packer.evolution.generation.dto.DetailedIndividual;
+import genetic.packer.evolution.generation.dto.Individual;
 import genetic.packer.mapper.BoxMapper;
 import javafx.geometry.Bounds;
+import javafx.scene.shape.Box;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -40,35 +45,41 @@ public class RequestResponseAdapter implements BiFunction<RequestDto, ParamsDto,
         final Packer.Context context = new PackerContextBuilder()
                 .withNumberOfGenerations(requestDto.getNumberOfGenerations())
                 .withGenerationSize(requestDto.getGenerationSize())
-                .withNumberOfBestIndividuals(requestDto.getNumberOfTopIndividuals())
+                .withNumberOfTopIndividuals(requestDto.getNumberOfTopIndividuals())
                 .withEmbryo(new EmbryoBuilder()
                     .withBounds(containerToBoundsMapper.apply(requestDto.getEmbryo().getContainer()))
                     .withBoxes(requestDto.getEmbryo().getBoxes().stream().map(boxMapper::map).collect(Collectors.toList()))
                     .build())
                 .build();
 
-        final Packer.Result<Double, Individual> result = packer.apply(context);
+        final Packer.Result<Double, Individual<Box>> result = packer.apply(context);
 
         return new ResponseDtoBuilder()
-                .withTopIndividuals(result
-                        .getBestIndividuals()
-                        .stream()
-                        .map(detailedIndividual -> {
-                            return new IndividualDtoBuilder()
-                                    .withFitness(detailedIndividual.getFitness())
-                                    .withTranslatedBoxes(detailedIndividual
-                                            .get()
-                                            .getCells()
-                                            .stream()
-                                            .map(boxMapper::map)
-                                            .collect(Collectors.toList())
-                                    )
-                                    .withNumberOfGeneration(detailedIndividual.getNumberOfGeneration())
-                                    .build();
-                        })
-                        .collect(Collectors.toList())
-                )
+                .withTopIndividuals(this.createTopIndividualsDtos(result.getTopIndividuals()))
                 .withContainer(requestDto.getEmbryo().getContainer())
+                .withGenerationStats(result.getGenerationStats())
                 .build();
+    }
+
+    public List<IndividualDto> createTopIndividualsDtos(List<DetailedIndividual<Double, Individual<Box>>> topIndividuals) {
+        return topIndividuals.stream()
+                .map(this::createTopIndividualDto)
+                .collect(Collectors.toList());
+
+    }
+
+    public IndividualDto createTopIndividualDto(DetailedIndividual<Double, Individual<Box>> detailedIndividual) {
+        return new IndividualDtoBuilder()
+            .withFitness(detailedIndividual.getFitness())
+            .withTranslatedBoxes(detailedIndividual
+                .get()
+                .getCells()
+                .stream()
+                .map(Cell::getNucleus)
+                .map(boxMapper::map)
+                .collect(Collectors.toList())
+            )
+            .withNumberOfGeneration(detailedIndividual.getNumberOfGeneration())
+            .build();
     }
 }

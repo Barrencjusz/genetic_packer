@@ -5,14 +5,11 @@ import genetic.packer.Packer;
 import genetic.packer.PackerContextBuilder;
 import genetic.packer.dto.request.ContainerDto;
 import genetic.packer.dto.request.RequestDto;
-import genetic.packer.generation.dto.Embryo;
-import genetic.packer.generation.dto.EmbryoBuilder;
-import genetic.packer.generation.dto.Individual;
-import javafx.geometry.BoundingBox;
+import genetic.packer.evolution.generation.dto.Embryo;
+import genetic.packer.evolution.generation.dto.EmbryoBuilder;
+import genetic.packer.evolution.generation.dto.Individual;
 import javafx.geometry.Bounds;
-import javafx.geometry.ContainerBoundsBuilder;
 import javafx.scene.shape.Box;
-import javafx.scene.shape.BoxBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -57,14 +54,12 @@ public class FitnessLoggingAdapter implements Runnable {
             final Packer.Context packerContext = new PackerContextBuilder()
                     .withNumberOfGenerations(request.getNumberOfGenerations())
                     .withGenerationSize(request.getGenerationSize())
-                    .withNumberOfBestIndividuals(request.getNumberOfTopIndividuals())
+                    .withNumberOfTopIndividuals(request.getNumberOfTopIndividuals())
                     .withEmbryo(embryo)
                     .build();
-            Packer.Result<Double, Individual> packingResult = packer.apply(packerContext);
+            Packer.Result<Double, Individual<Box>> packingResult = packer.apply(packerContext);
             packingResult
-                    .getBestIndividuals()
-                    .stream()
-                    .forEach(individual -> System.out.println(individual.getFitness()));
+                    .getTopIndividuals().forEach(individual -> System.out.println(individual.getFitness()));
         } catch (IOException e) {
             e.printStackTrace();
         }

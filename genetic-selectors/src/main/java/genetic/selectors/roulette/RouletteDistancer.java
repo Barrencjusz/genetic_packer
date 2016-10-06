@@ -10,5 +10,5 @@ import java.util.TreeMap;
  * @author piotr.larysz
  */
 public interface RouletteDistancer {
-    <T> TreeMap<Double, T> distance(Collection<RatedIndividual<Double, T>> entries);
+    <T> TreeMap<Double, RatedIndividual<Double, T>> distance(Collection<RatedIndividual<Double, T>> entries);
 }

@@ -1,6 +1,6 @@
 package genetic.packer.factory;
 
-import genetic.packer.generation.dto.Generation;
+import genetic.packer.evolution.generation.dto.Generation;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

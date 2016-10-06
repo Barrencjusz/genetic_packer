@@ -24,12 +24,12 @@ public class RouletteDistancerImpl implements RouletteDistancer {
     private Supplier<Function<RatedIndividual<Double, ?>, Double>> distancedKeyCreator;
 
     @Override
-    public <T> TreeMap<Double, T> distance(Collection<RatedIndividual<Double, T>> entries) {
-        return entries.stream().collect(Collectors.toMap(this.distancedKeyCreator.get(), RatedIndividual::get, (a, b) -> a, TreeMap::new));
+    public <T> TreeMap<Double, RatedIndividual<Double, T>> distance(Collection<RatedIndividual<Double, T>> entries) {
+        return entries.stream().collect(Collectors.toMap(this.distancedKeyCreator.get(), Function.identity(), (a, b) -> a, TreeMap::new));
     }
 
     @Component
-    @Scope(value = "prototype", proxyMode = ScopedProxyMode.INTERFACES)
+    @Scope(value = "prototype", proxyMode = ScopedProxyMode.INTERFACES)//fixme possible concurrency issue
     public static class DistancedKeyCreator implements Supplier<Function<RatedIndividual<Double, ?>, Double>> {
 
         private Double currentKeyDistance = 0.0;

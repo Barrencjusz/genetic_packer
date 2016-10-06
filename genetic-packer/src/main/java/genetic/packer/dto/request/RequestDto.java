@@ -18,7 +18,9 @@ public class RequestDto {
     @Min(2)
     private Integer generationSize;
 
-    private Integer numberOfTopIndividuals;
+    private Integer numberOfTopIndividuals; //fixme it's statistics property, move it to new node 'statistics' ? or make it parameter
+
+    private Integer numberOfEliteIndividuals;
 
     private EmbryoDto embryo;
 
@@ -44,6 +46,14 @@ public class RequestDto {
 
     public void setNumberOfTopIndividuals(Integer numberOfTopIndividuals) {
         this.numberOfTopIndividuals = numberOfTopIndividuals;
+    }
+
+    public Integer getNumberOfEliteIndividuals() {
+        return numberOfEliteIndividuals;
+    }
+
+    public void setNumberOfEliteIndividuals(Integer numberOfEliteIndividuals) {
+        this.numberOfEliteIndividuals = numberOfEliteIndividuals;
     }
 
     public EmbryoDto getEmbryo() {

@@ -47,7 +47,7 @@ public class RouletteDistancerTest {
 
     @Test
     public void test() {
-        TreeMap<Double, String> treeMap = this.rouletteDistancer.distance(ratedIndividuals);
+        TreeMap<Double, RatedIndividual<Double, String>> treeMap = this.rouletteDistancer.distance(ratedIndividuals);
         boolean allMatch = treeMap.entrySet().stream().allMatch(entry -> {
             return testValues.stream().anyMatch(testValue -> DoubleMath.fuzzyEquals(entry.getKey(), testValue, 0.1));
         });

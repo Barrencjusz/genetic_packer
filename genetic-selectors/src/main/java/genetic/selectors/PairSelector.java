@@ -1,37 +1,25 @@
 package genetic.selectors;
 
-import genetic.selectors.dto.RatedIndividual;
-
 import java.util.Collection;
-import java.util.Map;
+import java.util.List;
 import java.util.function.Function;
+
+import genetic.selectors.dto.RatedIndividual;
+import org.apache.commons.lang3.tuple.Pair;
 
 /**
  * @author piotr.larysz
  */
-public interface PairSelector<V extends Comparable<V>> {
+public interface PairSelector<V extends Comparable<V>, T> {
 
-    <T> Collection<Map.Entry<T, T>> select(Context<V, T> context);
+    List<Pair<RatedIndividual<V, T>, RatedIndividual<V, T>>> select(SizeFunction sizeFunction);
 
-    class Context<V extends Comparable<V>, T> {
+    interface Creator<V extends Comparable<V>> {
 
-        public static final Function<Context<?, ?>, Integer> HALF = context -> context.getRatedIndividuals().size() / 2;
-
-        private Function<Context<?, ?>, Integer> selectionSizeStrategy;
-
-        private Collection<RatedIndividual<V, T>> ratedIndividuals;
-
-        public Context(Collection<RatedIndividual<V, T>> ratedIndividuals, Function<Context<?, ?>, Integer> selectionSizeStrategy) {
-            this.selectionSizeStrategy = selectionSizeStrategy;
-            this.ratedIndividuals = ratedIndividuals;
-        }
-
-        public Integer getPairsToSelect() {
-            return this.selectionSizeStrategy.apply(this);
-        }
-
-        public Collection<RatedIndividual<V, T>> getRatedIndividuals() {
-            return ratedIndividuals;
-        }
+        <P> PairSelector<V, P> from(Collection<RatedIndividual<V, P>> ratedIndividuals);
     }
+
+    interface SizeFunction extends Function<Integer, Integer> {}
+
+    SizeFunction HALF = size -> size / 2;
 }
