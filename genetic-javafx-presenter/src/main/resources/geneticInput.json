@@ -1,7 +1,8 @@
 {
-  "numberOfGenerations": 200,
+  "numberOfGenerations": 3000,
   "generationSize": 50,
   "numberOfTopIndividuals": 20,
+  "numberOfEliteIndividuals": 1,
   "embryo": {
     "container": {
       "width": 3,
@@ -32,12 +33,27 @@
       {
         "width": 2,
         "height": 2,
+        "depth": 1
+      },
+      {
+        "width": 1,
+        "height": 2,
         "depth": 2
       },
       {
         "width": 2,
         "height": 2,
         "depth": 2
+      },
+      {
+        "width": 2,
+        "height": 2,
+        "depth": 2
+      },
+      {
+        "width": 3,
+        "height": 4,
+        "depth": 1
       }
     ]
   }

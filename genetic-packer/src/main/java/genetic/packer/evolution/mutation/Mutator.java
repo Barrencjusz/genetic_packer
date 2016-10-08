@@ -17,23 +17,5 @@ import java.util.function.Supplier;
 /**
  * @author piotr.larysz
  */
-@Component
-public class Mutator implements Consumer<Individual<Box>> {
-
-    private static final double mutationChance = 0.01;
-
-    @Autowired
-    @Qualifier("boundsAwareBoxTranslationRandomizer")
-    private BiConsumer<Box, Bounds> translationRandomizer;
-
-    @Autowired
-    private Supplier<ThreadLocalRandom> random;
-
-    @Resource
-    private List<BiConsumer<Box, Double>> boxTranslationList;
-
-    @Override
-    public void accept(Individual individual) {
-        //boxTranslationList.stream().forEach(regenerateForBounds);
-    }
+public interface Mutator extends BiConsumer<Individual<Box>, Bounds> {
 }

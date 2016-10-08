@@ -5,6 +5,7 @@ import com.google.common.collect.Iterables;
 import genetic.packer.evolution.elitism.ElitistPicker;
 import genetic.packer.evolution.generation.dto.Generation;
 import genetic.packer.evolution.generation.dto.Individual;
+import genetic.packer.evolution.mutation.Mutator;
 import genetic.packer.evolution.recombination.Recombinator;
 import genetic.packer.misc.Sorting;
 import genetic.selectors.PairSelector;
@@ -41,7 +42,7 @@ public class OngoingGenerationCreator implements BiFunction<Generation<Double, I
     private Recombinator<Individual<Box>, Individual<Box>> singleChildRecombinator;
 
     @Autowired
-    private Consumer<Individual<Box>> mutator;
+    private Mutator mutator;
 
     @Override
     public Collection<Individual<Box>> apply(Generation<Double, Individual<Box>> generation, GeneticContext evolutionContext) {
@@ -63,7 +64,7 @@ public class OngoingGenerationCreator implements BiFunction<Generation<Double, I
                 .map(ratedIndividual -> new ImmutablePair<>(ratedIndividual.getLeft().get(), ratedIndividual.getRight().get()))
                 .map(this.twoChildrenRecombinator)
                 .flatMap(pair -> ImmutableList.of(pair.getKey(), pair.getValue()).stream())
-                .peek(mutator)
+                .peek(individual ->  this.mutator.accept(individual, evolutionContext.getEmbryo().getBounds()))
                 .collect(Collectors.toList());
         newIndividuals.addAll(elites); //todo clone ?
 
