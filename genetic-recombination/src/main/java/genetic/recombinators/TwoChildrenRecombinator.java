@@ -1,4 +1,4 @@
-package genetic.packer.evolution.recombination.impl;
+package genetic.recombinators;
 
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -7,10 +7,9 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import genetic.packer.evolution.generation.dto.Individual;
-import genetic.packer.evolution.generation.dto.IndividualBuilder;
-import genetic.packer.evolution.recombination.Recombinator;
-import genetic.packer.fx.Cell;
+import genetic.packer.evolution.generation.dto.individual.Individual;
+import genetic.packer.evolution.generation.dto.individual.impl.SimpleIndividualBuilder;
+import genetic.packer.evolution.generation.dto.Cell;
 import javafx.scene.shape.Box;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
@@ -53,7 +52,7 @@ public class TwoChildrenRecombinator implements Recombinator<Individual<Box>, Pa
                     .map(cellCloningMapper)
                     .collect(Collectors.toList());
 
-            return new ImmutablePair<>(new IndividualBuilder<Box>()
+            return new ImmutablePair<>(new SimpleIndividualBuilder<Double, Box>()
                     .withCells(firstChildChromosome)
                     .build(),
                 new IndividualBuilder<Box>()

@@ -1,11 +1,11 @@
 package genetic.packer.mapper;
 
-import genetic.packer.fx.Cell;
-import genetic.packer.fx.CellBuilder;
+import java.util.function.Function;
+
+import genetic.packer.evolution.generation.dto.Cell;
+import genetic.packer.evolution.generation.dto.CellBuilder;
 import javafx.scene.shape.Box;
 import org.mapstruct.Mapper;
-
-import java.util.function.Function;
 
 /**
  * @author piotr.larysz

@@ -6,19 +6,18 @@ import java.util.stream.Collectors;
 
 import genetic.packer.evolution.elitism.ElitistPicker;
 import genetic.packer.misc.Sorting;
-import genetic.selectors.dto.RatedIndividual;
+import genetic.selectors.dto.FitnessTested;
 
 /**
  * @author piotr.larysz
  */
-public class ElitistPickerImpl<T> implements ElitistPicker<T> {
+public class ElitistPickerImpl<T> implements ElitistPicker {
 
     @Override
-    public List<T> pick(Collection<RatedIndividual<Double, T>> individuals, Integer count) {
-        return individuals.stream()
+    public <M1 extends Comparable<M1>, M2 extends FitnessTested<M1>> List<M2> pick(Collection<M2> fitnessTesteds, Integer count) {
+        return fitnessTesteds.stream()
             .sorted(Sorting::compareDescending)
             .limit(count)
-            .map(RatedIndividual::get)
             .collect(Collectors.toList());
     }
 }

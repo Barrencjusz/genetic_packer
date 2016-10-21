@@ -2,8 +2,8 @@ package genetic.packer.evolution.normalisation;
 
 import java.util.function.BiFunction;
 
-import genetic.packer.fx.Cell;
-import genetic.packer.evolution.generation.dto.Individual;
+import genetic.packer.evolution.generation.dto.Cell;
+import genetic.packer.evolution.generation.dto.individual.Individual;
 import javafx.geometry.Bounds;
 import javafx.scene.shape.Box;
 import org.springframework.stereotype.Component;

@@ -8,7 +8,7 @@ import java.util.function.Function;
 import genetic.packer.evolution.generation.dto.Generation;
 import genetic.packer.evolution.generation.dto.GenerationStatistics;
 import genetic.packer.evolution.generation.dto.GenerationStatisticsBuilder;
-import genetic.packer.evolution.generation.dto.Individual;
+import genetic.packer.evolution.generation.dto.individual.Individual;
 import genetic.packer.statistics.GenerationStatisticsCreator;
 import javafx.scene.shape.Box;
 import org.springframework.beans.factory.annotation.Autowired;

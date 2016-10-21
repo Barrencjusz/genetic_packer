@@ -4,7 +4,7 @@ import java.util.List;
 
 import genetic.packer.evolution.generation.dto.Generation;
 import genetic.packer.evolution.generation.dto.GenerationStatistics;
-import genetic.packer.evolution.generation.dto.Individual;
+import genetic.packer.evolution.generation.dto.individual.Individual;
 import javafx.scene.shape.Box;
 
 /**

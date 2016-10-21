@@ -7,7 +7,7 @@ import genetic.packer.dto.request.ContainerDto;
 import genetic.packer.dto.request.RequestDto;
 import genetic.packer.evolution.generation.dto.Embryo;
 import genetic.packer.evolution.generation.dto.EmbryoBuilder;
-import genetic.packer.evolution.generation.dto.Individual;
+import genetic.packer.evolution.generation.dto.individual.impl.SimpleIndividual;
 import javafx.geometry.Bounds;
 import javafx.scene.shape.Box;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +57,7 @@ public class FitnessLoggingAdapter implements Runnable {
                     .withNumberOfTopIndividuals(request.getNumberOfTopIndividuals())
                     .withEmbryo(embryo)
                     .build();
-            Packer.Result<Double, Individual<Box>> packingResult = packer.apply(packerContext);
+            Packer.Result<Double, SimpleIndividual<Box>> packingResult = packer.apply(packerContext);
             packingResult
                     .getTopIndividuals().forEach(individual -> System.out.println(individual.getFitness()));
         } catch (IOException e) {

@@ -1,7 +1,14 @@
 package genetic.selectors.roulette.impl;
 
+import java.util.Collection;
+import java.util.TreeMap;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import genetic.selectors.PairSelector;
-import genetic.selectors.dto.RatedIndividual;
+import genetic.selectors.dto.FitnessTested;
 import genetic.selectors.roulette.RouletteDistancer;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
@@ -9,17 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
-
-import java.util.AbstractMap;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.function.Supplier;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author piotr.larysz
@@ -29,7 +25,7 @@ import java.util.stream.Stream;
 public class RoulettePairSelectorCreator implements PairSelector.Creator<Double> {
 
     @Autowired
-    private RouletteDistancer rouletteDistancer;
+    private RouletteDistancer<Double> rouletteDistancer;
 
     @Autowired
     private Supplier<ThreadLocalRandom> random;
@@ -37,13 +33,13 @@ public class RoulettePairSelectorCreator implements PairSelector.Creator<Double>
     private double fitnessSum; //fixme possible concurrency issue
 
     @Override
-    public <T> PairSelector<Double, T> from(Collection<RatedIndividual<Double, T>> ratedIndividuals) {
+    public <M extends FitnessTested<Double>> PairSelector<Double, M> from(Collection<M> fitnessTesteds) {
         return sizeFunction -> {
-            fitnessSum = ratedIndividuals.stream().mapToDouble(RatedIndividual::getFitness).sum();
-            TreeMap<Double, RatedIndividual<Double, T>> treeMap = rouletteDistancer.distance(ratedIndividuals);
+            fitnessSum = fitnessTesteds.stream().mapToDouble(FitnessTested::getFitness).sum();
+            TreeMap<Double, M> treeMap = rouletteDistancer.distance(fitnessTesteds);
 
             return Stream.generate(getPair(treeMap))
-                .limit(sizeFunction.apply(ratedIndividuals.size()))
+                .limit(sizeFunction.apply(fitnessTesteds.size()))
                 .collect(Collectors.toList());
         };
     }

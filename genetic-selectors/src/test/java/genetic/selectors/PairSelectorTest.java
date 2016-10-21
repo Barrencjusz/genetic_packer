@@ -14,7 +14,7 @@
 //import java.util.function.Supplier;
 //
 //import com.google.common.collect.ImmutableList;
-//import genetic.selectors.dto.RatedIndividual;
+//import genetic.packer.evolution.generation.dto.RatedIndividual;
 //import genetic.selectors.dto.RatedIndividualBuilder;
 //import org.apache.commons.lang3.tuple.ImmutablePair;
 //import org.apache.commons.lang3.tuple.Pair;

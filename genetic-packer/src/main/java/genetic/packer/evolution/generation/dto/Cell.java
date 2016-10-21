@@ -1,4 +1,4 @@
-package genetic.packer.fx;
+package genetic.packer.evolution.generation.dto;
 
 import net.karneim.pojobuilder.GeneratePojoBuilder;
 

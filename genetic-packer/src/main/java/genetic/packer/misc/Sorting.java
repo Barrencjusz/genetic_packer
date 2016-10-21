@@ -1,13 +1,13 @@
 package genetic.packer.misc;
 
-import genetic.selectors.dto.RatedIndividual;
+import genetic.selectors.dto.FitnessTested;
 
 /**
  * @author piotr.larysz
  */
 public class Sorting {
 
-    public static int compareDescending(RatedIndividual<Double, ?> first, RatedIndividual<Double, ?> second) {
-        return Double.compare(second.getFitness(), first.getFitness());
+    public static <M1 extends Comparable<M1>, M2 extends FitnessTested<M1>> int compareDescending(M2 first, M2 second) {
+        return second.getFitness().compareTo(first.getFitness());
     }
 }

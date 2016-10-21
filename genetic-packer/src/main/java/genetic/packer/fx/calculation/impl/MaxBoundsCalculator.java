@@ -1,4 +1,4 @@
-package genetic.packer.fx;
+package genetic.packer.fx.calculation.impl;
 
 import org.springframework.stereotype.Component;
 

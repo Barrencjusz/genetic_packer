@@ -1,5 +1,10 @@
 package genetic.packer.adapter;
 
+import java.util.List;
+import java.util.function.BiFunction;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
 import genetic.packer.Packer;
 import genetic.packer.PackerContextBuilder;
 import genetic.packer.dto.request.ContainerDto;
@@ -9,20 +14,15 @@ import genetic.packer.dto.response.IndividualDto;
 import genetic.packer.dto.response.IndividualDtoBuilder;
 import genetic.packer.dto.response.ResponseDto;
 import genetic.packer.dto.response.ResponseDtoBuilder;
+import genetic.packer.evolution.generation.dto.Cell;
 import genetic.packer.evolution.generation.dto.EmbryoBuilder;
-import genetic.packer.fx.Cell;
-import genetic.packer.evolution.generation.dto.DetailedIndividual;
-import genetic.packer.evolution.generation.dto.Individual;
+import genetic.packer.evolution.generation.dto.individual.impl.DetailedIndividual;
+import genetic.packer.evolution.generation.dto.individual.impl.SimpleIndividual;
 import genetic.packer.mapper.BoxMapper;
 import javafx.geometry.Bounds;
 import javafx.scene.shape.Box;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
-import java.util.function.BiFunction;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /**
  * @author piotr.larysz
@@ -52,7 +52,7 @@ public class RequestResponseAdapter implements BiFunction<RequestDto, ParamsDto,
                     .build())
                 .build();
 
-        final Packer.Result<Double, Individual<Box>> result = packer.apply(context);
+        final Packer.Result<Double, SimpleIndividual<Box>> result = packer.apply(context);
 
         return new ResponseDtoBuilder()
                 .withTopIndividuals(this.createTopIndividualsDtos(result.getTopIndividuals()))
@@ -61,18 +61,17 @@ public class RequestResponseAdapter implements BiFunction<RequestDto, ParamsDto,
                 .build();
     }
 
-    public List<IndividualDto> createTopIndividualsDtos(List<DetailedIndividual<Double, Individual<Box>>> topIndividuals) {
+    public List<IndividualDto> createTopIndividualsDtos(List<DetailedIndividual<Double, SimpleIndividual<Box>>> topIndividuals) {
         return topIndividuals.stream()
                 .map(this::createTopIndividualDto)
                 .collect(Collectors.toList());
 
     }
 
-    public IndividualDto createTopIndividualDto(DetailedIndividual<Double, Individual<Box>> detailedIndividual) {
+    public IndividualDto createTopIndividualDto(DetailedIndividual<Double, SimpleIndividual<Box>> detailedIndividual) {
         return new IndividualDtoBuilder()
             .withFitness(detailedIndividual.getFitness())
             .withTranslatedBoxes(detailedIndividual
-                .get()
                 .getCells()
                 .stream()
                 .map(Cell::getNucleus)

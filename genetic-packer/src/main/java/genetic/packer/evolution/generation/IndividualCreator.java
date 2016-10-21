@@ -1,11 +1,11 @@
 package genetic.packer.evolution.generation;
 
 import genetic.packer.evolution.generation.dto.IndividualBuilder;
-import genetic.packer.fx.Cell;
+import genetic.packer.evolution.generation.dto.Cell;
+import genetic.packer.evolution.generation.dto.individual.impl.SimpleIndividual;
 import genetic.packer.fx.CellBuilder;
 import genetic.packer.fx.copy.BoxSizeCloner;
 import genetic.packer.evolution.generation.dto.Embryo;
-import genetic.packer.evolution.generation.dto.Individual;
 import javafx.geometry.Bounds;
 import javafx.scene.shape.Box;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
  * @author piotr.larysz
  */
 @Component
-public class IndividualCreator implements Function<Embryo, Supplier<Individual<Box>>> {
+public class IndividualCreator implements Function<Embryo, Supplier<SimpleIndividual<Box>>> {
 
     @Autowired
     private BoxSizeCloner boxSizeCloner;
@@ -37,7 +37,7 @@ public class IndividualCreator implements Function<Embryo, Supplier<Individual<B
     private BiConsumer<Box, Bounds> translationRandomizer;
 
     @Override
-    public Supplier<Individual<Box>> apply(Embryo embryo) {
+    public Supplier<SimpleIndividual<Box>> apply(Embryo embryo) {
         AtomicInteger integer = new AtomicInteger();
         return () ->
             this.boxSizeCloner.clone(embryo.getBoxes()).stream()

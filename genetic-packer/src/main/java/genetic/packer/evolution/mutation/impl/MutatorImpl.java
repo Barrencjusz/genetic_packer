@@ -4,9 +4,9 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
-import genetic.packer.evolution.generation.dto.Individual;
+import genetic.packer.evolution.generation.dto.individual.impl.SimpleIndividual;
 import genetic.packer.evolution.mutation.Mutator;
-import genetic.packer.fx.Cell;
+import genetic.packer.evolution.generation.dto.Cell;
 import javafx.geometry.Bounds;
 import javafx.scene.shape.Box;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class MutatorImpl implements Mutator {
 
-    private static final double mutationChance = 0.01;
+    private static final double mutationChance = 0.008;
 
     @Autowired
     @Qualifier("boundsAwareBoxTranslationRandomizer")
@@ -32,7 +32,7 @@ public class MutatorImpl implements Mutator {
 
 
     @Override
-    public void accept(Individual<Box> individual, Bounds bounds) {
+    public void accept(SimpleIndividual<Box> individual, Bounds bounds) {
         individual.getCells().stream()
             .map(Cell::getNucleus)
             .forEach(box -> {

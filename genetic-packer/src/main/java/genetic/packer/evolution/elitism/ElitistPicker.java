@@ -3,12 +3,12 @@ package genetic.packer.evolution.elitism;
 import java.util.Collection;
 import java.util.List;
 
-import genetic.selectors.dto.RatedIndividual;
+import genetic.selectors.dto.FitnessTested;
 
 /**
  * @author piotr.larysz
  */
-public interface ElitistPicker<T> {
+public interface ElitistPicker {
 
-    List<T> pick(Collection<RatedIndividual<Double, T>> individuals, Integer count);
+    <M1 extends Comparable<M1>, M2 extends FitnessTested<M1>> List<M2> pick(Collection<M2> fitnessTesteds, Integer count);
 }

@@ -1,14 +1,20 @@
 package genetic.selectors.roulette;
 
-import genetic.selectors.dto.RatedIndividual;
-
 import java.util.Collection;
-import java.util.Map;
 import java.util.TreeMap;
+import java.util.function.Function;
+import java.util.function.Supplier;
+
+import genetic.selectors.dto.FitnessTested;
 
 /**
  * @author piotr.larysz
  */
-public interface RouletteDistancer {
-    <T> TreeMap<Double, RatedIndividual<Double, T>> distance(Collection<RatedIndividual<Double, T>> entries);
+public interface RouletteDistancer<T extends Comparable<T>> {
+
+    <M extends FitnessTested<T>> TreeMap<T, M> distance(Collection<M> entries);
+
+    interface KeyCreator<T extends Comparable<T>> extends Supplier<Function<FitnessTested<T>, T>> {
+
+    }
 }

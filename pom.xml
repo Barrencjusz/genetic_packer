@@ -11,5 +11,7 @@
         <module>genetic-packer</module>
         <module>genetic-selectors</module>
         <module>genetic-parent</module>
+        <module>genetic-recombination</module>
+        <module>genetic-api</module>
     </modules>
 </project>

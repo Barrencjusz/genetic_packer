@@ -3,7 +3,6 @@ package genetic.packer.mapper;
 import genetic.packer.dto.BoxDto;
 import genetic.packer.dto.response.TranslatedBoxDto;
 import genetic.packer.dto.response.TranslatedBoxDtoBuilder;
-import genetic.packer.dto.response.TranslationDto;
 import genetic.packer.dto.response.TranslationDtoBuilder;
 import javafx.scene.shape.Box;
 import org.mapstruct.Mapper;

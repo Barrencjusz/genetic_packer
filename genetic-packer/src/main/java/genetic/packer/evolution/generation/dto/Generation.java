@@ -1,6 +1,6 @@
 package genetic.packer.evolution.generation.dto;
 
-import genetic.selectors.dto.RatedIndividual;
+import genetic.packer.evolution.generation.dto.individual.impl.RatedIndividual;
 import net.karneim.pojobuilder.GeneratePojoBuilder;
 
 import java.util.Collection;

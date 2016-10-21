@@ -1,7 +1,8 @@
-package genetic.packer.evolution.generation;
+package genetic.packer.evolution.generation.creator;
 
 import genetic.packer.evolution.generation.dto.Embryo;
-import genetic.packer.evolution.generation.dto.Individual;
+import genetic.packer.evolution.generation.dto.individual.Individual;
+import genetic.packer.evolution.generation.dto.individual.impl.Individual;
 import javafx.scene.shape.Box;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

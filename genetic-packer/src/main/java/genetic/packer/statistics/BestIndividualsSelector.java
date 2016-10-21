@@ -1,18 +1,18 @@
 package genetic.packer.statistics;
 
-import genetic.packer.evolution.generation.dto.DetailedIndividual;
-import genetic.packer.evolution.generation.dto.DetailedIndividualBuilder;
-import genetic.packer.evolution.generation.dto.Generation;
-import genetic.packer.evolution.generation.dto.Individual;
-import genetic.selectors.dto.RatedIndividual;
-import javafx.scene.shape.Box;
-import org.mapstruct.Mapper;
-import org.springframework.stereotype.Component;
-
 import java.util.List;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import genetic.packer.evolution.generation.dto.Generation;
+import genetic.packer.evolution.generation.dto.individual.Individual;
+import genetic.packer.evolution.generation.dto.individual.impl.DetailedIndividual;
+import genetic.packer.evolution.generation.dto.individual.impl.DetailedIndividualBuilder;
+import genetic.packer.evolution.generation.dto.individual.impl.RatedIndividual;
+import javafx.scene.shape.Box;
+import org.mapstruct.Mapper;
+import org.springframework.stereotype.Component;
 
 /**
  * @author piotr.larysz

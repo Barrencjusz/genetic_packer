@@ -2,14 +2,16 @@ package genetic.packer;
 
 import genetic.packer.evolution.generation.GeneticContext;
 import genetic.packer.evolution.generation.dto.GenerationStatistics;
-import genetic.packer.evolution.generation.dto.DetailedIndividual;
+import genetic.packer.evolution.generation.dto.individual.Individual;
+import genetic.packer.evolution.generation.dto.individual.impl.DetailedIndividual;
 import genetic.packer.evolution.generation.dto.Embryo;
 import genetic.packer.evolution.generation.dto.Generation;
-import genetic.packer.evolution.generation.dto.Individual;
 import genetic.packer.misc.Cast;
 import genetic.packer.statistics.GenerationStatisticsCreator;
 import javafx.scene.shape.Box;
 import net.karneim.pojobuilder.GeneratePojoBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,6 +28,8 @@ import java.util.stream.Stream;
  */
 @Component
 public class Packer implements Function<Packer.Context, Packer.Result<Double, Individual<Box>>> {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(Packer.class);
 
     @Autowired
     private BeanFactory beanFactory;
