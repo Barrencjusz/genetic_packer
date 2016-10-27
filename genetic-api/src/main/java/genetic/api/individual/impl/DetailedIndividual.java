@@ -1,6 +1,6 @@
-package genetic.packer.evolution.generation.dto.individual.impl;
+package genetic.api.individual.impl;
 
-import net.karneim.pojobuilder.GeneratePojoBuilder;
+import genetic.api.builder.HasBuilder;
 
 /**
  * @author piotr.larysz
@@ -9,7 +9,7 @@ public class DetailedIndividual<V extends Comparable<V>, T> extends RatedIndivid
 
     private Integer numberOfGeneration;
 
-    @GeneratePojoBuilder
+    @HasBuilder
     public DetailedIndividual(Integer numberOfGeneration, RatedIndividual<V, T> ratedIndividual) {
         super(ratedIndividual.getFitness(), ratedIndividual);
         this.numberOfGeneration = numberOfGeneration;

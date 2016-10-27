@@ -1,12 +1,15 @@
 package genetic.packer.evolution.fitness;
 
-import org.springframework.stereotype.Component;
-
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+
+import javaslang.Tuple2;
+import javaslang.collection.Seq;
+import javaslang.collection.Traversable;
+import org.springframework.stereotype.Component;
 
 /**
  * @author piotr.larysz
@@ -22,5 +25,9 @@ public class EveryCombinationResolver {
             }
         }
         return combinations;
+    }
+
+    public <T> Traversable<Tuple2<T, T>> apply(Seq<T> objects) {
+        return objects.crossProduct();
     }
 }

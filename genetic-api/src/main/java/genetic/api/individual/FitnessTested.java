@@ -1,4 +1,4 @@
-package genetic.selectors.dto;
+package genetic.api.individual;
 
 /**
  * @author piotr.larysz

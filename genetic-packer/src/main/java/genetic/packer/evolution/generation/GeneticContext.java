@@ -1,12 +1,12 @@
 package genetic.packer.evolution.generation;
 
+import genetic.api.builder.HasBuilder;
 import genetic.packer.evolution.generation.dto.Embryo;
-import net.karneim.pojobuilder.GeneratePojoBuilder;
 
 /**
  * @author piotr.larysz
  */
-@GeneratePojoBuilder
+@HasBuilder
 public class GeneticContext {
 
     private Embryo embryo;

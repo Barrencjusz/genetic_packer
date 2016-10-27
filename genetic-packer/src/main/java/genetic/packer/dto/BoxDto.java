@@ -1,11 +1,11 @@
 package genetic.packer.dto;
 
-import net.karneim.pojobuilder.GeneratePojoBuilder;
+import genetic.api.builder.HasBuilder;
 
 /**
  * @author piotr.larysz
  */
-@GeneratePojoBuilder
+@HasBuilder
 public class BoxDto {
 
     private Integer width;

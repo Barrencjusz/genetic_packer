@@ -1,16 +1,13 @@
 package genetic.packer.statistics;
 
-import java.util.List;
 import java.util.function.BiFunction;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
+import genetic.api.individual.impl.DetailedIndividual;
+import genetic.api.individual.impl.DetailedIndividualBuilder;
+import genetic.api.individual.impl.RatedIndividual;
 import genetic.packer.evolution.generation.dto.Generation;
-import genetic.packer.evolution.generation.dto.individual.Individual;
-import genetic.packer.evolution.generation.dto.individual.impl.DetailedIndividual;
-import genetic.packer.evolution.generation.dto.individual.impl.DetailedIndividualBuilder;
-import genetic.packer.evolution.generation.dto.individual.impl.RatedIndividual;
 import javafx.scene.shape.Box;
+import javaslang.collection.Seq;
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 
@@ -19,29 +16,26 @@ import org.springframework.stereotype.Component;
  */
 @Mapper
 @Component//FIXME too long bifunction declaration
-public abstract class BestIndividualsSelector implements BiFunction<List<Generation<Double, Individual<Box>>>, Integer, List<DetailedIndividual<Double, Individual<Box>>>> {
+public abstract class BestIndividualsSelector implements BiFunction<Seq<Generation<Double, Box>>, Integer, Seq<DetailedIndividual<Double, Box>>> {
 
     @Override
-    public List<DetailedIndividual<Double, Individual<Box>>> apply(List<Generation<Double, Individual<Box>>> generations, Integer size) {
+    public Seq<DetailedIndividual<Double, Box>> apply(Seq<Generation<Double, Box>> generations, Integer size) {
         return generations
-                .stream()
-                .flatMap(this::toDetailedIndividuals)
-                .sorted(this::compare)
-                .limit(size)
-                .collect(Collectors.toList());
+            .flatMap(this::toDetailedIndividuals)
+            .sorted(this::compare)
+            .take(size);
     }
 
     private <T extends RatedIndividual<Double, ?>> int compare(T firstIndividual, T secondIndividual) {
         return secondIndividual.getFitness().compareTo(firstIndividual.getFitness());
     }
 
-    private Stream<DetailedIndividual<Double, Individual<Box>>> toDetailedIndividuals(final Generation<Double, Individual<Box>> generation) {
+    private Seq<DetailedIndividual<Double, Box>> toDetailedIndividuals(final Generation<Double, Box> generation) {
         return generation.getRatedIndividuals()
-                .stream()
-                .map(ratedIndividual -> new DetailedIndividualBuilder<Double, Individual<Box>>()
-                        .withRatedIndividual(ratedIndividual)
-                        .withNumberOfGeneration(generation.getId())
+                .map(ratedIndividual -> new DetailedIndividualBuilder<Double, Box>()
+                        .ratedIndividual(ratedIndividual)
+                        .numberOfGeneration(generation.getId())
                         .build()
-                );
+                ).toList();
     }
 }

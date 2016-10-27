@@ -1,24 +1,23 @@
 package genetic.packer.evolution.fitness;
 
-import java.util.Collection;
-
-import net.karneim.pojobuilder.GeneratePojoBuilder;
+import genetic.api.builder.HasBuilder;
+import javaslang.collection.Traversable;
 
 /**
  * @author piotr.larysz
  */
-@GeneratePojoBuilder
+@HasBuilder
 public class FitnessComponents {
 
-    private Collection<Boolean> intersections;
+    private Traversable<Boolean> intersections;
 
     private Double volume;
 
-    public Collection<Boolean> getIntersections() {
+    public Traversable<Boolean> getIntersections() {
         return intersections;
     }
 
-    public void setIntersections(Collection<Boolean> intersections) {
+    public void setIntersections(Traversable<Boolean> intersections) {
         this.intersections = intersections;
     }
 

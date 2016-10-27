@@ -1,11 +1,11 @@
 package genetic.packer.mapper;
 
+import java.util.function.Function;
+
 import genetic.packer.dto.request.ContainerDto;
 import javafx.geometry.Bounds;
 import javafx.geometry.ContainerBoundsBuilder;
 import org.mapstruct.Mapper;
-
-import java.util.function.Function;
 
 /**
  * @author piotr.larysz
@@ -16,9 +16,9 @@ public abstract class ContainerToBoundsMapper implements Function<ContainerDto, 
     @Override
     public Bounds apply(ContainerDto containerDto) {
         return new ContainerBoundsBuilder()
-                .withWidth(containerDto.getWidth())
-                .withHeight(containerDto.getHeight())
-                .withDepth(containerDto.getDepth())
-                .build();
+            .width(containerDto.getWidth())
+            .height(containerDto.getHeight())
+            .depth(containerDto.getDepth())
+            .build();
     }
 }

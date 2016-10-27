@@ -1,11 +1,11 @@
 package genetic.packer.evolution.generation.dto;
 
-import net.karneim.pojobuilder.GeneratePojoBuilder;
+import genetic.api.builder.HasBuilder;
 
 /**
  * @author piotr.larysz
  */
-@GeneratePojoBuilder
+@HasBuilder
 public class GenerationStatistics {
 
     private Integer generationNumber;

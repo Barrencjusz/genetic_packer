@@ -1,17 +1,16 @@
 package genetic.packer.evolution.fitness.impl;
 
-import java.util.Collection;
+import javaslang.collection.Traversable;
 
 /**
  * @author piotr.larysz
  */
 public abstract class BaseFitnessTranslator {
 
-    protected double rateIntersections(Collection<Boolean> intersections) {
-        return intersections.stream()
+    protected double rateIntersections(Traversable<Boolean> intersections) {
+        return intersections
                 .map(this::rateSingleIntersection)
-                .mapToDouble(Double::valueOf)
-                .reduce(1, (left, right) -> left * right);
+                .reduce((left, right) -> left * right);
     }
 
     private double rateSingleIntersection(boolean intersects) {

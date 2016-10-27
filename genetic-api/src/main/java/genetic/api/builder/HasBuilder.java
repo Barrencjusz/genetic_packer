@@ -1,4 +1,4 @@
-package genetic.packer.config;
+package genetic.api.builder;
 
 /**
  * @author piotr.larysz

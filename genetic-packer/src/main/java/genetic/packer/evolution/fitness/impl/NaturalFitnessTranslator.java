@@ -1,10 +1,8 @@
 package genetic.packer.evolution.fitness.impl;
 
 import genetic.packer.evolution.fitness.FitnessComponents;
-import genetic.packer.evolution.fitness.FitnessTester;
 import genetic.packer.evolution.fitness.FitnessTranslator;
 import org.apache.commons.lang3.BooleanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -17,9 +15,7 @@ public class NaturalFitnessTranslator extends BaseFitnessTranslator implements F
 
     @Override
     public String apply(FitnessComponents fitnessComponents) {
-        final long intersectionCount = fitnessComponents.getIntersections().stream()
-                .filter(BooleanUtils::isTrue)
-                .count();
+        final long intersectionCount = fitnessComponents.getIntersections().filter(BooleanUtils::isTrue).size();
         return String.format(
             TEXT,
             intersectionCount,

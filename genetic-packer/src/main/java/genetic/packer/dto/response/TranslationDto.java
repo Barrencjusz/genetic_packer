@@ -1,11 +1,11 @@
 package genetic.packer.dto.response;
 
-import net.karneim.pojobuilder.GeneratePojoBuilder;
+import genetic.api.builder.HasBuilder;
 
 /**
  * @author piotr.larysz
  */
-@GeneratePojoBuilder
+@HasBuilder
 public class TranslationDto<T> {
 
     private T x;

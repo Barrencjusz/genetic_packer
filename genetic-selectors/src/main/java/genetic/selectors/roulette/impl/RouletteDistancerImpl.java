@@ -1,12 +1,13 @@
 package genetic.selectors.roulette.impl;
 
-import java.util.Collection;
 import java.util.TreeMap;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
-import genetic.selectors.dto.FitnessTested;
+import genetic.api.individual.FitnessTested;
 import genetic.selectors.roulette.RouletteDistancer;
+import javaslang.Tuple;
+import javaslang.Tuple2;
+import javaslang.collection.Traversable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
@@ -22,9 +23,8 @@ public class RouletteDistancerImpl implements RouletteDistancer<Double> {
     private KeyCreator<Double> distancedKeyCreator;
 
     @Override
-    public <M extends FitnessTested<Double>> TreeMap<Double, M> distance(Collection<M> entries) {
-        return entries.stream()
-            .collect(Collectors.toMap(this.distancedKeyCreator.get(), Function.identity(), (a, b) -> a, TreeMap::new));
+    public <M extends FitnessTested<Double>> TreeMap<Double, M> distance(Traversable<M> entries) {
+        return entries.toJavaMap(TreeMap::new, this.distancedKeyCreator.get());
     }
 
     @Component
@@ -34,11 +34,8 @@ public class RouletteDistancerImpl implements RouletteDistancer<Double> {
         private Double currentKeyDistance = 0.0;
 
         @Override
-        public Function<FitnessTested<Double>, Double> get() {
-            return fitnessTested -> {
-                currentKeyDistance += fitnessTested.getFitness();
-                return currentKeyDistance;
-            };
+        public <M extends FitnessTested<Double>> Function<M, Tuple2<Double, M>> get() {
+            return fitnessTested -> Tuple.of(currentKeyDistance += fitnessTested.getFitness(), fitnessTested);
         }
     }
 }

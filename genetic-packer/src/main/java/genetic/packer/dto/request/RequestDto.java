@@ -1,15 +1,14 @@
 package genetic.packer.dto.request;
 
-import genetic.packer.dto.request.validation.Even;
-import net.karneim.pojobuilder.GeneratePojoBuilder;
-
 import javax.validation.constraints.Min;
-import javax.validation.constraints.Size;
+
+import genetic.api.builder.HasBuilder;
+import genetic.packer.dto.request.validation.Even;
 
 /**
  * @author piotr.larysz
  */
-@GeneratePojoBuilder
+@HasBuilder
 public class RequestDto {
 
     private Integer numberOfGenerations;

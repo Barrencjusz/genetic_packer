@@ -1,14 +1,14 @@
 package genetic.packer.evolution.elitism;
 
-import java.util.Collection;
-import java.util.List;
-
-import genetic.selectors.dto.FitnessTested;
+import genetic.api.individual.Individual;
+import genetic.api.individual.impl.RatedIndividual;
+import javaslang.collection.Seq;
+import javaslang.collection.Traversable;
 
 /**
  * @author piotr.larysz
  */
 public interface ElitistPicker {
 
-    <M1 extends Comparable<M1>, M2 extends FitnessTested<M1>> List<M2> pick(Collection<M2> fitnessTesteds, Integer count);
+    <M1 extends Comparable<M1>, M2> Seq<Individual<M1, M2>> pick(Traversable<RatedIndividual<M1, M2>> fitnessTesteds, Integer count);
 }

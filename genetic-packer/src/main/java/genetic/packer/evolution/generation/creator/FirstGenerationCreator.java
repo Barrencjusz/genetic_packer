@@ -1,32 +1,28 @@
 package genetic.packer.evolution.generation.creator;
 
-import genetic.packer.evolution.generation.dto.Embryo;
-import genetic.packer.evolution.generation.dto.individual.Individual;
-import genetic.packer.evolution.generation.dto.individual.impl.Individual;
-import javafx.scene.shape.Box;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import java.util.Collection;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
+import genetic.api.individual.Individual;
+import genetic.packer.evolution.generation.dto.Embryo;
+import javafx.scene.shape.Box;
+import javaslang.collection.Stream;
+import javaslang.collection.Traversable;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * @author piotr.larysz
  */
 @Component
-public class FirstGenerationCreator implements BiFunction<Embryo, Integer, Collection<Individual<Box>>> {
+public class FirstGenerationCreator implements BiFunction<Embryo, Integer, Traversable<Individual<Double, Box>>> {
 
     @Autowired
-    private Function<Embryo, Supplier<Individual<Box>>> individualCreator;
+    private Function<Embryo, Supplier<Individual<Double, Box>>> individualCreator;
 
     @Override
-    public Collection<Individual<Box>> apply(Embryo embryo, Integer size) {
-        return Stream.generate(individualCreator.apply(embryo))
-            .limit(size)
-            .collect(Collectors.toList());
+    public Traversable<Individual<Double, Box>> apply(Embryo embryo, Integer size) {
+        return Stream.continually(individualCreator.apply(embryo)).take(size);
     }
 }

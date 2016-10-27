@@ -1,12 +1,12 @@
 package genetic.packer.dto.response;
 
+import genetic.api.builder.HasBuilder;
 import genetic.packer.dto.BoxDto;
-import net.karneim.pojobuilder.GeneratePojoBuilder;
 
 /**
  * @author piotr.larysz
  */
-@GeneratePojoBuilder
+@HasBuilder
 public class TranslatedBoxDto extends BoxDto {
 
     private TranslationDto<Integer> position;

@@ -1,5 +1,8 @@
 package genetic.packer.adapter;
 
+import java.io.IOException;
+import java.util.function.Function;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import genetic.packer.Packer;
 import genetic.packer.PackerContextBuilder;
@@ -7,16 +10,11 @@ import genetic.packer.dto.request.ContainerDto;
 import genetic.packer.dto.request.RequestDto;
 import genetic.packer.evolution.generation.dto.Embryo;
 import genetic.packer.evolution.generation.dto.EmbryoBuilder;
-import genetic.packer.evolution.generation.dto.individual.impl.SimpleIndividual;
 import javafx.geometry.Bounds;
 import javafx.scene.shape.Box;
+import javaslang.collection.Seq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /**
  * @author piotr.larysz
@@ -38,26 +36,26 @@ public class FitnessLoggingAdapter implements Runnable {
         try {
             final RequestDto request = this.mapper.readValue(getClass().getResource("/packages.json"), RequestDto.class);
 
-            final List<Box> boxes = request.getEmbryo().getBoxes().stream().map(boxDto -> {
+            final Seq<Box> boxes = request.getEmbryo().getBoxes().map(boxDto -> {
                 Box box = new Box();
                 box.setWidth(boxDto.getWidth());
                 box.setHeight(boxDto.getHeight());
                 box.setDepth(boxDto.getDepth());
                 return box;
-            }).collect(Collectors.toList());
+            });
 
             final Embryo embryo = new EmbryoBuilder()
-                    .withBounds(containerToBoundsMapper.apply(request.getEmbryo().getContainer()))
-                    .withBoxes(boxes)
+                    .bounds(containerToBoundsMapper.apply(request.getEmbryo().getContainer()))
+                    .boxes(boxes)
                     .build();
 
             final Packer.Context packerContext = new PackerContextBuilder()
-                    .withNumberOfGenerations(request.getNumberOfGenerations())
-                    .withGenerationSize(request.getGenerationSize())
-                    .withNumberOfTopIndividuals(request.getNumberOfTopIndividuals())
-                    .withEmbryo(embryo)
+                    .numberOfGenerations(request.getNumberOfGenerations())
+                    .generationSize(request.getGenerationSize())
+                    .numberOfTopIndividuals(request.getNumberOfTopIndividuals())
+                    .embryo(embryo)
                     .build();
-            Packer.Result<Double, SimpleIndividual<Box>> packingResult = packer.apply(packerContext);
+            Packer.Result<Double, Box> packingResult = packer.apply(packerContext);
             packingResult
                     .getTopIndividuals().forEach(individual -> System.out.println(individual.getFitness()));
         } catch (IOException e) {

@@ -2,10 +2,8 @@ package genetic.packer.statistics.average;
 
 import java.util.function.Function;
 
+import genetic.api.individual.impl.RatedIndividual;
 import genetic.packer.evolution.generation.dto.Generation;
-import genetic.packer.evolution.generation.dto.individual.Individual;
-import genetic.packer.evolution.generation.dto.individual.impl.SimpleIndividual;
-import genetic.packer.evolution.generation.dto.individual.impl.RatedIndividual;
 import javafx.scene.shape.Box;
 import org.springframework.stereotype.Component;
 
@@ -13,13 +11,13 @@ import org.springframework.stereotype.Component;
  * @author piotr.larysz
  */
 @Component
-public class AverageFitnessResolver implements Function<Generation<Double, Individual<Box>>, Double> {
+public class AverageFitnessResolver implements Function<Generation<Double, Box>, Double> {
 
     @Override
-    public Double apply(Generation<Double, Individual<Box>> generation) {
-        return generation.getRatedIndividuals().stream()
-            .mapToDouble(RatedIndividual::getFitness)
+    public Double apply(Generation<Double, Box> generation) {
+        return generation.getRatedIndividuals()
+            .map(RatedIndividual::getFitness)
             .average()
-            .getAsDouble(); //fixme shitme
+            .get(); //fixme shitme
     }
 }

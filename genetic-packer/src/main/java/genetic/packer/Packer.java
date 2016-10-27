@@ -1,14 +1,21 @@
 package genetic.packer;
 
+import java.util.function.BiFunction;
+import java.util.function.Function;
+import java.util.function.Supplier;
+
+import genetic.api.builder.HasBuilder;
+import genetic.api.individual.Individual;
+import genetic.api.individual.impl.DetailedIndividual;
 import genetic.packer.evolution.generation.GeneticContext;
-import genetic.packer.evolution.generation.dto.GenerationStatistics;
-import genetic.packer.evolution.generation.dto.individual.Individual;
-import genetic.packer.evolution.generation.dto.individual.impl.DetailedIndividual;
 import genetic.packer.evolution.generation.dto.Embryo;
 import genetic.packer.evolution.generation.dto.Generation;
+import genetic.packer.evolution.generation.dto.GenerationStatistics;
 import genetic.packer.misc.Cast;
 import genetic.packer.statistics.GenerationStatisticsCreator;
 import javafx.scene.shape.Box;
+import javaslang.collection.Seq;
+import javaslang.collection.Stream;
 import net.karneim.pojobuilder.GeneratePojoBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,18 +23,11 @@ import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.function.BiFunction;
-import java.util.function.Function;
-import java.util.function.Supplier;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 /**
  * @author piotr.larysz
  */
 @Component
-public class Packer implements Function<Packer.Context, Packer.Result<Double, Individual<Box>>> {
+public class Packer implements Function<Packer.Context, Packer.Result<Double, Box>> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Packer.class);
 
@@ -38,26 +38,25 @@ public class Packer implements Function<Packer.Context, Packer.Result<Double, In
     private Function<Context, GeneticContext> packerContextMapper;
 
     @Autowired
-    private BiFunction<List<Generation<Double, Individual<Box>>>, Integer, List<DetailedIndividual<Double, Individual<Box>>>> bestIndividualsSelector;
+    private BiFunction<Seq<Generation<Double, Box>>, Integer, Seq<DetailedIndividual<Double, Box>>> bestIndividualsSelector;
 
     @Autowired
     private GenerationStatisticsCreator generationStatisticsCreator;
 
     @Override
-    public Result<Double, Individual<Box>> apply(Context context) {
-        Supplier<Generation<Double, Individual<Box>>> generationCreator = Cast.checked(beanFactory.getBean("statefulGenerationCreator", packerContextMapper.apply(context)));
-        final List<Generation<Double, Individual<Box>>> generations = Stream
-                .generate(generationCreator)
-                .limit(context.getNumberOfGenerations())
-                .collect(Collectors.toList());
-        return new PackerResultBuilder<Double, Individual<Box>>()
-                .withGenerations(generations)
-                .withTopIndividuals(bestIndividualsSelector.apply(generations, context.getNumberOfTopIndividuals()))
-                .withGenerationStats(generationStatisticsCreator.create(generations))
-                .build();
+    public Result<Double, Box> apply(Context context) {
+        Supplier<Generation<Double, Box>> generationCreator = Cast.checked(beanFactory.getBean("statefulGenerationCreator", packerContextMapper.apply(context)));
+        final Seq<Generation<Double, Box>> generations = Stream
+            .continually(generationCreator)
+            .take(context.getNumberOfGenerations());
+        return new PackerResultBuilder<Double, Box>()
+            .generations(generations)
+            .topIndividuals(bestIndividualsSelector.apply(generations, context.getNumberOfTopIndividuals()))
+            .generationStats(generationStatisticsCreator.create(generations))
+            .build();
     }
 
-    @GeneratePojoBuilder(withName = "Packer*Builder")
+    @GeneratePojoBuilder(withName = "Packer*Builder", withSetterNamePattern = "*")
     public static class Context {
 
         private Integer numberOfGenerations;
@@ -111,36 +110,36 @@ public class Packer implements Function<Packer.Context, Packer.Result<Double, In
         }
     }
 
-    @GeneratePojoBuilder(withName = "Packer*Builder")
+    @GeneratePojoBuilder(withName = "Packer*Builder", withSetterNamePattern = "*")
     public static class Result<V extends Comparable<V>, T> {
 
-        private List<Generation<V, T>> generations;
+        private Seq<Generation<V, T>> generations;
 
-        private List<DetailedIndividual<V, T>> topIndividuals;
+        private Seq<DetailedIndividual<V, T>> topIndividuals;
 
-        private List<GenerationStatistics> generationStats;
+        private Seq<GenerationStatistics> generationStats;
 
-        public List<Generation<V, T>> getGenerations() {
+        public Seq<Generation<V, T>> getGenerations() {
             return generations;
         }
 
-        public void setGenerations(List<Generation<V, T>> generations) {
+        public void setGenerations(Seq<Generation<V, T>> generations) {
             this.generations = generations;
         }
 
-        public List<DetailedIndividual<V, T>> getTopIndividuals() {
+        public Seq<DetailedIndividual<V, T>> getTopIndividuals() {
             return topIndividuals;
         }
 
-        public void setTopIndividuals(List<DetailedIndividual<V, T>> topIndividuals) {
+        public void setTopIndividuals(Seq<DetailedIndividual<V, T>> topIndividuals) {
             this.topIndividuals = topIndividuals;
         }
 
-        public List<GenerationStatistics> getGenerationStats() {
+        public Seq<GenerationStatistics> getGenerationStats() {
             return generationStats;
         }
 
-        public void setGenerationStats(List<GenerationStatistics> generationStats) {
+        public void setGenerationStats(Seq<GenerationStatistics> generationStats) {
             this.generationStats = generationStats;
         }
     }

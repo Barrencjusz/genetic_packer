@@ -1,17 +1,17 @@
 package genetic.selectors.roulette.impl;
 
-import java.util.Collection;
+
 import java.util.TreeMap;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
+import genetic.api.individual.FitnessTested;
 import genetic.selectors.PairSelector;
-import genetic.selectors.dto.FitnessTested;
 import genetic.selectors.roulette.RouletteDistancer;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
+import javaslang.Tuple;
+import javaslang.Tuple2;
+import javaslang.collection.Stream;
+import javaslang.collection.Traversable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
@@ -33,19 +33,17 @@ public class RoulettePairSelectorCreator implements PairSelector.Creator<Double>
     private double fitnessSum; //fixme possible concurrency issue
 
     @Override
-    public <M extends FitnessTested<Double>> PairSelector<Double, M> from(Collection<M> fitnessTesteds) {
+    public <M extends FitnessTested<Double>> PairSelector<M> from(Traversable<M> fitnessTesteds) {
         return sizeFunction -> {
-            fitnessSum = fitnessTesteds.stream().mapToDouble(FitnessTested::getFitness).sum();
+            fitnessSum = fitnessTesteds.toList().map(FitnessTested::getFitness).sum().doubleValue();
             TreeMap<Double, M> treeMap = rouletteDistancer.distance(fitnessTesteds);
 
-            return Stream.generate(getPair(treeMap))
-                .limit(sizeFunction.apply(fitnessTesteds.size()))
-                .collect(Collectors.toList());
+            return Stream.continually(getPair(treeMap)).take(sizeFunction.apply(fitnessTesteds.size()));
         };
     }
 
-    private <T> Supplier<Pair<T, T>> getPair(TreeMap<Double, T> treeMap) {
-        return () -> new ImmutablePair<>(getSingle(treeMap), getSingle(treeMap));
+    private <T> Supplier<Tuple2<T, T>> getPair(TreeMap<Double, T> treeMap) {
+        return () -> Tuple.of(getSingle(treeMap), getSingle(treeMap));
     }
 
     private <T> T getSingle(TreeMap<Double, T> treeMap) {

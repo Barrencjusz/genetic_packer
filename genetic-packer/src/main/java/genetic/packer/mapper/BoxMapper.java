@@ -17,14 +17,14 @@ public abstract class BoxMapper {
 
     public TranslatedBoxDto map(Box box) {
         return new TranslatedBoxDtoBuilder()
-                .withWidth((int) box.getWidth())
-                .withHeight((int) box.getHeight())
-                .withDepth((int) box.getDepth())
-                .withPosition(new TranslationDtoBuilder<Integer>()
-                        .withX((int) box.getBoundsInParent().getMinX())
-                        .withY((int) box.getBoundsInParent().getMinY())
-                        .withZ((int) box.getBoundsInParent().getMinZ())
-                        .build())
-                .build();
+            .width((int) box.getWidth())
+            .height((int) box.getHeight())
+            .depth((int) box.getDepth())
+            .position(new TranslationDtoBuilder<Integer>()
+                .x((int) box.getBoundsInParent().getMinX())
+                .y((int) box.getBoundsInParent().getMinY())
+                .z((int) box.getBoundsInParent().getMinZ())
+                .build())
+            .build();
     }
 }

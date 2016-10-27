@@ -4,9 +4,9 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
-import genetic.packer.evolution.generation.dto.individual.impl.SimpleIndividual;
+import genetic.api.individual.Cell;
+import genetic.api.individual.Organism;
 import genetic.packer.evolution.mutation.Mutator;
-import genetic.packer.evolution.generation.dto.Cell;
 import javafx.geometry.Bounds;
 import javafx.scene.shape.Box;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,10 +30,9 @@ public class MutatorImpl implements Mutator {
 
     private final Supplier<Boolean> mutation = () -> random.get().nextDouble() <= mutationChance; //todo make some component holding the random also
 
-
     @Override
-    public void accept(SimpleIndividual<Box> individual, Bounds bounds) {
-        individual.getCells().stream()
+    public void accept(Organism<Box> individual, Bounds bounds) {
+        individual.getCells()
             .map(Cell::getNucleus)
             .forEach(box -> {
                 if(mutation.get()) {

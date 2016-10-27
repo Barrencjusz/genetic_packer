@@ -2,11 +2,12 @@ package genetic.recombinators;
 
 import java.util.function.Function;
 
-import org.apache.commons.lang3.tuple.Pair;
+import javaslang.Tuple2;
+import javaslang.collection.Traversable;
 
 /**
  * @author piotr.larysz
  */
-public interface Recombinator<T1, T2> extends Function<Pair<T1, T1>, T2> {
+public interface Recombinator<T1, T2> extends Function<Tuple2<? extends T1, ? extends T1>, Traversable<T2>> {
 
 }

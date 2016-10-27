@@ -1,20 +1,19 @@
 package genetic.packer.evolution.generation.dto;
 
+import genetic.api.builder.HasBuilder;
 import javafx.geometry.Bounds;
 import javafx.scene.shape.Box;
-import net.karneim.pojobuilder.GeneratePojoBuilder;
-
-import java.util.List;
+import javaslang.collection.Seq;
 
 /**
  * @author piotr.larysz
  */
-@GeneratePojoBuilder
+@HasBuilder
 public class Embryo {
 
     private Bounds bounds;
 
-    private List<Box> boxes;
+    private Seq<Box> boxes;
 
     public Bounds getBounds() {
         return bounds;
@@ -24,11 +23,11 @@ public class Embryo {
         this.bounds = bounds;
     }
 
-    public List<Box> getBoxes() {
+    public Seq<Box> getBoxes() {
         return boxes;
     }
 
-    public void setBoxes(List<Box> boxes) {
+    public void setBoxes(Seq<Box> boxes) {
         this.boxes = boxes;
     }
 }

@@ -2,8 +2,8 @@ package genetic.packer.evolution.normalisation;
 
 import java.util.function.BiFunction;
 
-import genetic.packer.evolution.generation.dto.Cell;
-import genetic.packer.evolution.generation.dto.individual.Individual;
+import genetic.api.individual.Cell;
+import genetic.api.individual.Individual;
 import javafx.geometry.Bounds;
 import javafx.scene.shape.Box;
 import org.springframework.stereotype.Component;
@@ -12,13 +12,13 @@ import org.springframework.stereotype.Component;
  * @author piotr.larysz
  */
 @Component
-public class Normalizer implements BiFunction<Individual<Box>, Bounds, Individual<Box>> {
+public class Normalizer implements BiFunction<Individual<Double, Box>, Bounds, Individual<Double, Box>> {
 
     @Override
-    public Individual<Box> apply(Individual<Box> individual, Bounds bounds) {
+    public Individual<Double, Box> apply(Individual<Double, Box> individual, Bounds bounds) {
         //fixme generate numbers at the beginning
         final int[] order = {0}; //fixme
-        individual.getCells().stream()
+        individual.getCells()
             .map(Cell::getNucleus)
             .map(box -> new OrderedBox(order[0]++, box));
             //.so

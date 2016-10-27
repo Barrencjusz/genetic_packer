@@ -1,30 +1,30 @@
 package genetic.packer.evolution.generation;
 
-import genetic.packer.evolution.generation.dto.IndividualBuilder;
-import genetic.packer.evolution.generation.dto.Cell;
-import genetic.packer.evolution.generation.dto.individual.impl.SimpleIndividual;
-import genetic.packer.fx.CellBuilder;
-import genetic.packer.fx.copy.BoxSizeCloner;
-import genetic.packer.evolution.generation.dto.Embryo;
-import javafx.geometry.Bounds;
-import javafx.scene.shape.Box;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
-
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
+
+import genetic.api.individual.Cell;
+import genetic.api.individual.CellBuilder;
+import genetic.api.individual.Individual;
+import genetic.api.individual.impl.SimpleIndividual;
+import genetic.packer.evolution.generation.dto.Embryo;
+import genetic.packer.fx.copy.BoxSizeCloner;
+import javafx.geometry.Bounds;
+import javafx.scene.shape.Box;
+import javaslang.collection.Stream;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
 /**
  * @author piotr.larysz
  */
 @Component
-public class IndividualCreator implements Function<Embryo, Supplier<SimpleIndividual<Box>>> {
+public class IndividualCreator implements Function<Embryo, Supplier<Individual<Double, Box>>> {
 
     @Autowired
     private BoxSizeCloner boxSizeCloner;
@@ -37,13 +37,18 @@ public class IndividualCreator implements Function<Embryo, Supplier<SimpleIndivi
     private BiConsumer<Box, Bounds> translationRandomizer;
 
     @Override
-    public Supplier<SimpleIndividual<Box>> apply(Embryo embryo) {
+    public Supplier<Individual<Double, Box>> apply(Embryo embryo) {
         AtomicInteger integer = new AtomicInteger();
-        return () ->
-            this.boxSizeCloner.clone(embryo.getBoxes()).stream()
-                .peek(this.randomizeAround(embryo.getBounds()))
-                .map(this.createCell(integer.getAndIncrement()))
-                .collect(Collectors.collectingAndThen(Collectors.toList(), cells -> new IndividualBuilder<Box>().withCells(cells).build()));
+        return () -> embryo.getBoxes()
+            .map(this.boxSizeCloner::clone)
+            .peek(this.randomizeAround(embryo.getBounds()))
+            .map(this.createCell(integer.getAndIncrement()))
+            .toStream()
+            .transform(getIndividual());
+    }
+
+    private Function<Stream<Cell<Box>>, Individual<Double, Box>> getIndividual() {
+        return SimpleIndividual::new;
     }
 
     private Consumer<Box> randomizeAround(Bounds bounds) {
@@ -52,9 +57,9 @@ public class IndividualCreator implements Function<Embryo, Supplier<SimpleIndivi
 
     private Function<Box, Cell<Box>> createCell(int order) {
         return box -> new CellBuilder<Box>()
-            .withNucleus(box)
-            .withOrder(order)
-            .withProcessingOrder(this.random.get().nextInt())
+            .nucleus(box)
+            .order(order)
+            .processingOrder(this.random.get().nextInt())
             .build();
     }
 }

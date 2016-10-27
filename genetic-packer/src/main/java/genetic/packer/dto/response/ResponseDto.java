@@ -1,22 +1,21 @@
 package genetic.packer.dto.response;
 
+import genetic.api.builder.HasBuilder;
 import genetic.packer.dto.BoxDto;
 import genetic.packer.evolution.generation.dto.GenerationStatistics;
-import net.karneim.pojobuilder.GeneratePojoBuilder;
-
-import java.util.List;
+import javaslang.collection.Seq;
 
 /**
  * @author piotr.larysz
  */
-@GeneratePojoBuilder
+@HasBuilder
 public class ResponseDto {
 
     private BoxDto container;
 
-    private List<IndividualDto> topIndividuals;
+    private Seq<IndividualDto> topIndividuals;
 
-    private List<GenerationStatistics> generationStats;
+    private Seq<GenerationStatistics> generationStats;
 
     public BoxDto getContainer() {
         return container;
@@ -26,19 +25,19 @@ public class ResponseDto {
         this.container = container;
     }
 
-    public List<IndividualDto> getTopIndividuals() {
+    public Seq<IndividualDto> getTopIndividuals() {
         return topIndividuals;
     }
 
-    public void setTopIndividuals(List<IndividualDto> topIndividuals) {
+    public void setTopIndividuals(Seq<IndividualDto> topIndividuals) {
         this.topIndividuals = topIndividuals;
     }
 
-    public List<GenerationStatistics> getGenerationStats() {
+    public Seq<GenerationStatistics> getGenerationStats() {
         return generationStats;
     }
 
-    public void setGenerationStats(List<GenerationStatistics> generationStats) {
+    public void setGenerationStats(Seq<GenerationStatistics> generationStats) {
         this.generationStats = generationStats;
     }
 }

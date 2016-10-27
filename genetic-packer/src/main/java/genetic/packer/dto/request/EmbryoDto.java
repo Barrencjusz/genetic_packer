@@ -1,26 +1,24 @@
 package genetic.packer.dto.request;
 
+import genetic.api.builder.HasBuilder;
 import genetic.packer.dto.BoxDto;
-import genetic.packer.dto.request.ContainerDto;
-import net.karneim.pojobuilder.GeneratePojoBuilder;
-
-import java.util.List;
+import javaslang.collection.Seq;
 
 /**
  * @author piotr.larysz
  */
-@GeneratePojoBuilder
+@HasBuilder
 public class EmbryoDto {
 
     private ContainerDto container;
 
-    private List<BoxDto> boxes;
+    private Seq<BoxDto> boxes;
 
-    public List<BoxDto> getBoxes() {
+    public Seq<BoxDto> getBoxes() {
         return boxes;
     }
 
-    public void setBoxes(List<BoxDto> boxes) {
+    public void setBoxes(Seq<BoxDto> boxes) {
         this.boxes = boxes;
     }
 

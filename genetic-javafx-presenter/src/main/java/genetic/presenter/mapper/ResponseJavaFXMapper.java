@@ -38,7 +38,7 @@ public class ResponseJavaFXMapper {
     private Supplier<Color> randomColor;
 
     public List<Node> map(IndividualDto individual) {
-        return individual.getTranslatedBoxes().stream().map(this::map).collect(Collectors.toList());
+        return individual.getTranslatedBoxes().map(this::map).collect(Collectors.toList());
     }
 
     //TODO associate transators with getters, mapstruct

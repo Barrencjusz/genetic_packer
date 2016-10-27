@@ -1,6 +1,7 @@
 package genetic.packer.misc;
 
-import genetic.selectors.dto.FitnessTested;
+
+import genetic.api.individual.FitnessTested;
 
 /**
  * @author piotr.larysz

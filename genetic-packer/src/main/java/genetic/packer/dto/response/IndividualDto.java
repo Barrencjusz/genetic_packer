@@ -1,20 +1,19 @@
 package genetic.packer.dto.response;
 
-import net.karneim.pojobuilder.GeneratePojoBuilder;
-
-import java.util.List;
+import genetic.api.builder.HasBuilder;
+import javaslang.collection.Seq;
 
 /**
  * @author piotr.larysz
  */
-@GeneratePojoBuilder
+@HasBuilder
 public class IndividualDto {
 
     private Double fitness;
 
     private Integer numberOfGeneration;
 
-    private List<TranslatedBoxDto> translatedBoxes;
+    private Seq<TranslatedBoxDto> translatedBoxes;
 
     public Double getFitness() {
         return fitness;
@@ -32,11 +31,11 @@ public class IndividualDto {
         this.numberOfGeneration = numberOfGeneration;
     }
 
-    public List<TranslatedBoxDto> getTranslatedBoxes() {
+    public Seq<TranslatedBoxDto> getTranslatedBoxes() {
         return translatedBoxes;
     }
 
-    public void setTranslatedBoxes(List<TranslatedBoxDto> translatedBoxes) {
+    public void setTranslatedBoxes(Seq<TranslatedBoxDto> translatedBoxes) {
         this.translatedBoxes = translatedBoxes;
     }
 }

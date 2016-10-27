@@ -1,16 +1,16 @@
-package genetic.packer.evolution.generation.dto;
+package genetic.api.individual;
 
-import net.karneim.pojobuilder.GeneratePojoBuilder;
+import genetic.api.builder.HasBuilder;
 
 /**
  * @author piotr.larysz
  */
-@GeneratePojoBuilder
+@HasBuilder
 public class Cell<T> {
 
     private int order;
 
-    private int processingOrder;
+    private int processingOrder; //todo maybe not required
 
     private T nucleus;
 
