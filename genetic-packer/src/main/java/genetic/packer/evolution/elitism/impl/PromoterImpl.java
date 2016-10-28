@@ -4,10 +4,12 @@ import genetic.api.elitism.EliteAcknowledged;
 import genetic.api.elitism.Promoter;
 import genetic.api.individual.impl.Elite;
 import genetic.api.individual.impl.RatedIndividual;
+import org.springframework.stereotype.Component;
 
 /**
  * @author piotr.larysz
  */
+@Component
 public class PromoterImpl implements Promoter, EliteAcknowledged {
 
     @Override

@@ -12,14 +12,13 @@ import org.springframework.stereotype.Component;
  * @author piotr.larysz
  */
 @Component
-public class BestFitnessResolver implements Function<Generation<Double, Box>, Double> {
+public class BestFitnessResolver implements Function<Generation<Double, Box>, Fitness<Double>> {
 
     @Override
-    public Double apply(Generation<Double, Box> generation) {
+    public Fitness<Double> apply(Generation<Double, Box> generation) {
         return generation.getRatedIndividuals()
+            .maxBy((o1, o2) -> o1.getFitness().get().compareTo(o2.getFitness().get())) //fixme naming
             .map(RatedIndividual::getFitness)
-            .map(Fitness::get)
-            .max()
             .get();
     }
 }

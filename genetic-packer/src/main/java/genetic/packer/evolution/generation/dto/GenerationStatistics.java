@@ -14,7 +14,7 @@ public class GenerationStatistics {
 
     private Double averageFitness;
 
-    private Double bestNaturalFitness; //todo some generic self-explaining function?
+    private String bestFitnessExplained; //todo some generic self-explaining function?
 
     private Double averageNaturalFitness;
 
@@ -42,12 +42,12 @@ public class GenerationStatistics {
         this.averageFitness = averageFitness;
     }
 
-    public Double getBestNaturalFitness() {
-        return bestNaturalFitness;
+    public String getBestFitnessExplained() {
+        return bestFitnessExplained;
     }
 
-    public void setBestNaturalFitness(Double bestNaturalFitness) {
-        this.bestNaturalFitness = bestNaturalFitness;
+    public void setBestFitnessExplained(String bestFitnessExplained) {
+        this.bestFitnessExplained = bestFitnessExplained;
     }
 
     public Double getAverageNaturalFitness() {

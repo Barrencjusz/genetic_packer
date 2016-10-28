@@ -7,10 +7,12 @@ import genetic.packer.misc.Sorting;
 import javaslang.collection.Seq;
 import javaslang.collection.Traversable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * @author piotr.larysz
  */
+@Component
 public class ElitistPickerImpl implements ElitistPicker {
 
     @Autowired

@@ -2,6 +2,7 @@ package genetic.packer.statistics.impl;
 
 import java.util.function.Function;
 
+import genetic.api.fitness.Fitness;
 import genetic.packer.evolution.generation.dto.Generation;
 import genetic.packer.evolution.generation.dto.GenerationStatistics;
 import genetic.packer.evolution.generation.dto.GenerationStatisticsBuilder;
@@ -18,7 +19,7 @@ import org.springframework.stereotype.Component;
 public class GenerationStatisticsCreatorImpl implements GenerationStatisticsCreator {
 
     @Autowired
-    private Function<Generation<Double, Box>, Double> bestFitnessResolver;
+    private Function<Generation<Double, Box>, Fitness<Double>> bestFitnessResolver;
 
     @Autowired
     private Function<Generation<Double, Box>, Double> averageFitnessResolver;
@@ -29,9 +30,11 @@ public class GenerationStatisticsCreatorImpl implements GenerationStatisticsCrea
     }
 
     private GenerationStatistics createGenerationStatistics(Generation<Double, Box> generation) {
+        final Fitness<Double> bestFitness = this.bestFitnessResolver.apply(generation);
         return new GenerationStatisticsBuilder()
-            .bestFitness(this.bestFitnessResolver.apply(generation))
+            .bestFitness(bestFitness.get())
             .averageFitness(this.averageFitnessResolver.apply(generation))
+            .bestFitnessExplained(bestFitness.explain())
             .build();
     }
 }

@@ -5,6 +5,7 @@ import java.util.TreeMap;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Supplier;
 
+import genetic.api.fitness.Fitness;
 import genetic.api.individual.FitnessTested;
 import genetic.selectors.PairSelector;
 import genetic.selectors.roulette.RouletteDistancer;
@@ -35,7 +36,7 @@ public class RoulettePairSelectorCreator implements PairSelector.Creator<Double>
     @Override
     public <M extends FitnessTested<Double>> PairSelector<M> from(Traversable<M> fitnessTesteds) {
         return sizeFunction -> {
-            fitnessSum = fitnessTesteds.toList().map(FitnessTested::getFitness).sum().doubleValue();
+            fitnessSum = fitnessTesteds.toList().map(FitnessTested::getFitness).map(Fitness::get).sum().doubleValue();
             TreeMap<Double, M> treeMap = rouletteDistancer.distance(fitnessTesteds);
 
             return Stream.continually(getPair(treeMap)).take(sizeFunction.apply(fitnessTesteds.size()));
