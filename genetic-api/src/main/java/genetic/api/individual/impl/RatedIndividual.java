@@ -3,6 +3,7 @@ package genetic.api.individual.impl;
 import genetic.api.builder.HasBuilder;
 import genetic.api.elitism.EliteAcknowledged;
 import genetic.api.elitism.Promoter;
+import genetic.api.fitness.Fitness;
 import genetic.api.individual.Cell;
 import genetic.api.individual.FitnessTested;
 import genetic.api.individual.Organism;
@@ -14,18 +15,18 @@ import javaslang.collection.Seq;
  */
 public class RatedIndividual<V extends Comparable<V>, T> implements Organism<T>, FitnessTested<V>, Promoted<V, T> {
 
-    private V fitness;
+    private Fitness<V> fitness;
 
     private Organism<T> organism;
 
     @HasBuilder
-    public RatedIndividual(V fitness, Organism<T> organism) {
+    public RatedIndividual(Fitness<V> fitness, Organism<T> organism) {
         this.fitness = fitness;
         this.organism = organism;
     }
 
     @Override
-    public V getFitness() {
+    public Fitness<V> getFitness() {
         return fitness;
     }
 

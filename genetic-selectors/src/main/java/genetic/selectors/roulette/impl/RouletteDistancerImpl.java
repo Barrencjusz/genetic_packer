@@ -35,7 +35,7 @@ public class RouletteDistancerImpl implements RouletteDistancer<Double> {
 
         @Override
         public <M extends FitnessTested<Double>> Function<M, Tuple2<Double, M>> get() {
-            return fitnessTested -> Tuple.of(currentKeyDistance += fitnessTested.getFitness(), fitnessTested);
+            return fitnessTested -> Tuple.of(currentKeyDistance += fitnessTested.getFitness().get(), fitnessTested);
         }
     }
 }

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
  * @author piotr.larysz
  */
 @Component
-public class NaturalFitnessTranslator extends BaseFitnessTranslator implements FitnessTranslator<FitnessComponents, String> {
+public class FitnessExplainedTranslator extends BaseFitnessTranslator implements FitnessTranslator<FitnessComponents, String> {
 
     private static final String TEXT = "%d boxes intersects, intersection score: %e, volume: %e";
 

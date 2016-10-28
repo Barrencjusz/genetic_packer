@@ -6,12 +6,24 @@ import javaslang.collection.Traversable;
 /**
  * @author piotr.larysz
  */
-@HasBuilder
-public class FitnessComponents {
+public class FitnessComponents extends TranslatedFitness<FitnessComponents, Double> {
 
     private Traversable<Boolean> intersections;
 
     private Double volume;
+
+    @HasBuilder
+    public FitnessComponents(
+        FitnessTranslator<FitnessComponents, Double> totalFitnessTranslator,
+        FitnessTranslator<FitnessComponents, String> fitnessExplainedTranslator
+    ) {
+        super(totalFitnessTranslator, fitnessExplainedTranslator);
+    }
+
+    @Override
+    protected FitnessComponents self() {
+        return this;
+    }
 
     public Traversable<Boolean> getIntersections() {
         return intersections;

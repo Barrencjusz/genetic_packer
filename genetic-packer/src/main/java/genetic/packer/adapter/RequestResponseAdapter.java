@@ -20,6 +20,7 @@ import javafx.geometry.Bounds;
 import javafx.scene.shape.Box;
 import javaslang.collection.Seq;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
@@ -32,6 +33,7 @@ public class RequestResponseAdapter implements BiFunction<RequestDto, ParamsDto,
     private Packer packer;
 
     @Autowired
+    @Qualifier("containerToBoundsMapperImpl")
     private Function<ContainerDto, Bounds> containerToBoundsMapper;
 
     @Autowired
@@ -66,7 +68,7 @@ public class RequestResponseAdapter implements BiFunction<RequestDto, ParamsDto,
 
     public IndividualDto createTopIndividualDto(DetailedIndividual<Double, Box> detailedIndividual) {
         return new IndividualDtoBuilder()
-            .fitness(detailedIndividual.getFitness())
+            .fitness(detailedIndividual.getFitness().get())
             .translatedBoxes(detailedIndividual
                 .getCells()
                 .map(Cell::getNucleus)

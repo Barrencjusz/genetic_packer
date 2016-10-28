@@ -1,23 +1,18 @@
 package genetic.presenter.mapper;
 
+import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.function.Supplier;
+
 import genetic.packer.dto.BoxDto;
-import genetic.packer.dto.BoxDtoBuilder;
 import genetic.packer.dto.response.IndividualDto;
-import genetic.packer.dto.response.ResponseDto;
 import genetic.packer.dto.response.TranslatedBoxDto;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
-import java.util.Map;
-import java.util.function.BiConsumer;
-import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 /**
  * @author piotr.larysz
@@ -37,8 +32,8 @@ public class ResponseJavaFXMapper {
     @Autowired
     private Supplier<Color> randomColor;
 
-    public List<Node> map(IndividualDto individual) {
-        return individual.getTranslatedBoxes().map(this::map).collect(Collectors.toList());
+    public List<? extends Node> map(IndividualDto individual) {
+        return individual.getTranslatedBoxes().map(this::map).toJavaList();
     }
 
     //TODO associate transators with getters, mapstruct

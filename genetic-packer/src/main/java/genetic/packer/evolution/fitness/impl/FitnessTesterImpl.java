@@ -9,6 +9,7 @@ import genetic.packer.evolution.fitness.BoxScoreProperties;
 import genetic.packer.evolution.fitness.EveryCombinationResolver;
 import genetic.packer.evolution.fitness.FitnessComponents;
 import genetic.packer.evolution.fitness.FitnessComponentsBuilder;
+import genetic.packer.evolution.fitness.FitnessTranslator;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.shape.Box;
@@ -33,6 +34,12 @@ public class FitnessTesterImpl implements Function<Individual<Double, Box>, Fitn
     @Autowired
     private Function<Traversable<Bounds>, Double> edgeVolumeCalculator;
 
+    @Autowired
+    private FitnessTranslator<FitnessComponents, Double> totalFitnessTranslator;
+
+    @Autowired
+    private FitnessTranslator<FitnessComponents, String> fitnessExplainedTranslator;
+
     @Override
     public FitnessComponents apply(final Individual<Double, Box> individual) {
         final Seq<BoxScoreProperties> boxScorePropertiesList = individual.getCells()
@@ -48,6 +55,8 @@ public class FitnessTesterImpl implements Function<Individual<Double, Box>, Fitn
         return new FitnessComponentsBuilder()
             .intersections(boxScorePropertiesList.map(BoxScoreProperties::isIntersects))
             .volume(edgeVolumeCalculator.apply(allBoxesBounds))
+            .totalFitnessTranslator(totalFitnessTranslator)
+            .fitnessExplainedTranslator(fitnessExplainedTranslator)
             .build();
     }
 }

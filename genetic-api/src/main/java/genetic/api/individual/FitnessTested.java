@@ -1,9 +1,11 @@
 package genetic.api.individual;
 
+import genetic.api.fitness.Fitness;
+
 /**
  * @author piotr.larysz
  */
 public interface FitnessTested<T extends Comparable<T>> {
 
-    T getFitness();
+    Fitness<T> getFitness();
 }

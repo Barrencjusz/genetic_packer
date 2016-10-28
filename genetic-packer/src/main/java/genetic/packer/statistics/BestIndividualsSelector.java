@@ -27,7 +27,7 @@ public abstract class BestIndividualsSelector implements BiFunction<Seq<Generati
     }
 
     private <T extends RatedIndividual<Double, ?>> int compare(T firstIndividual, T secondIndividual) {
-        return secondIndividual.getFitness().compareTo(firstIndividual.getFitness());
+        return secondIndividual.getFitness().get().compareTo(firstIndividual.getFitness().get());
     }
 
     private Seq<DetailedIndividual<Double, Box>> toDetailedIndividuals(final Generation<Double, Box> generation) {

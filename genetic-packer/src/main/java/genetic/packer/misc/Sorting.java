@@ -9,6 +9,6 @@ import genetic.api.individual.FitnessTested;
 public class Sorting {
 
     public static <M1 extends Comparable<M1>, M2 extends FitnessTested<M1>> int compareDescending(M2 first, M2 second) {
-        return second.getFitness().compareTo(first.getFitness());
+        return second.getFitness().get().compareTo(first.getFitness().get());
     }
 }
