@@ -52,11 +52,12 @@ public class FitnessTesterImpl implements Function<Individual<Double, Box>, Fitn
             .map(Cell::getNucleus)
             .map(Node::getBoundsInParent);
 
-        return new FitnessComponentsBuilder()
-            .intersections(boxScorePropertiesList.map(BoxScoreProperties::isIntersects))
-            .volume(edgeVolumeCalculator.apply(allBoxesBounds))
-            .totalFitnessTranslator(totalFitnessTranslator)
-            .fitnessExplainedTranslator(fitnessExplainedTranslator)
-            .build();
+        final FitnessComponents fitnessComponents = new FitnessComponentsBuilder()
+                .intersections(boxScorePropertiesList.map(BoxScoreProperties::isIntersects))
+                .volume(edgeVolumeCalculator.apply(allBoxesBounds))
+                .totalFitnessTranslator(totalFitnessTranslator)
+                .fitnessExplainedTranslator(fitnessExplainedTranslator)
+                .build();
+        return fitnessComponents;
     }
 }

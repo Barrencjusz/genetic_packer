@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import javaslang.Tuple;
 import javaslang.Tuple2;
 import javaslang.collection.Seq;
 import javaslang.collection.Traversable;
@@ -28,6 +29,6 @@ public class EveryCombinationResolver {
     }
 
     public <T> Traversable<Tuple2<T, T>> apply(Seq<T> objects) {
-        return objects.crossProduct();
+        return objects.combinations(2).map(combination -> Tuple.of(combination.head(), combination.last()));
     }
 }

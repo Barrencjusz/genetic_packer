@@ -39,11 +39,10 @@ public class IndividualCreator implements Function<Embryo, Supplier<Individual<D
     @Override
     public Supplier<Individual<Double, Box>> apply(Embryo embryo) {
         AtomicInteger integer = new AtomicInteger();
-        return () -> embryo.getBoxes()
+        return () -> embryo.getBoxes().toStream()
             .map(this.boxSizeCloner::clone)
             .peek(this.randomizeAround(embryo.getBounds()))
             .map(this.createCell(integer.getAndIncrement()))
-            .toStream()
             .transform(getIndividual());
     }
 

@@ -46,12 +46,12 @@ public class OngoingGenerationCreator implements BiFunction<Generation<Double, B
 
         final Seq<Individual<Double, Box>> elites = this.elitistPicker.pick(generation.getRatedIndividuals(), evolutionContext.getNumberOfEliteIndividuals()); //fixme remove sorting inside
 
-        final int noIndividualsToGenerate = (generation.getRatedIndividuals().size() - elites.size()) / 2;
-        final boolean numberOfNewIndividualsIsOdd = (generation.getRatedIndividuals().size() - noIndividualsToGenerate) % 2 != 0; //todo method (misc), check if proper
+        final int noPairsToSelect = (generation.getRatedIndividuals().size() - elites.size()) / 2;
+        final boolean numberOfNewIndividualsIsOdd = evolutionContext.getNumberOfEliteIndividuals() % 2 != 0; //todo method (misc), check if proper
 
         final PairSelector<RatedIndividual<Double, Box>> pairSelector = this.pairSelectorCreator.from(generation.getRatedIndividuals());
 
-        final Seq<Individual<Double, Box>> newIndividuals = pairSelector.select(size -> noIndividualsToGenerate)
+        final Seq<Individual<Double, Box>> newIndividuals = pairSelector.select(size -> noPairsToSelect)
                 .flatMap(this.twoChildrenRecombinator)
                 .appendAll(this.createSingleForEven(pairSelector, numberOfNewIndividualsIsOdd))
                 .peek(individual ->  this.mutator.accept(individual, evolutionContext.getEmbryo().getBounds()));

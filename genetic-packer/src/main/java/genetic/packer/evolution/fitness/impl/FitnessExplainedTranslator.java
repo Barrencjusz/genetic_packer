@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class FitnessExplainedTranslator extends BaseFitnessTranslator implements FitnessTranslator<FitnessComponents, String> {
 
-    private static final String TEXT = "%d boxes intersects, intersection score: %e, volume: %e";
+    private static final String TEXT = "%d boxes intersects, intersection score: %.2f, volume: %.2f";
 
     @Override
     public String apply(FitnessComponents fitnessComponents) {

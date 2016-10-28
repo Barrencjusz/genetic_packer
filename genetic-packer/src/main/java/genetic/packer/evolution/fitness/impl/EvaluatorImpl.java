@@ -26,7 +26,7 @@ public class EvaluatorImpl implements Evaluator<Double, Box>, EliteAcknowledged 
     @Override
     public RatedIndividual<Double, Box> apply(Individual<Double, Box> individual) {
         return new RatedIndividualBuilder<Double, Box>()
-            .fitness(fitnessTester.apply(individual)) //fixme lol
+            .fitness(fitnessTester.apply(individual))
             .organism(individual)
             .build();
     }

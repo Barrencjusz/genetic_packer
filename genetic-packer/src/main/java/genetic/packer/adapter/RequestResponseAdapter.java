@@ -46,6 +46,7 @@ public class RequestResponseAdapter implements BiFunction<RequestDto, ParamsDto,
                 .numberOfGenerations(requestDto.getNumberOfGenerations())
                 .generationSize(requestDto.getGenerationSize())
                 .numberOfTopIndividuals(requestDto.getNumberOfTopIndividuals())
+                .numberOfEliteIndividuals(requestDto.getNumberOfEliteIndividuals())
                 .embryo(new EmbryoBuilder()
                     .bounds(containerToBoundsMapper.apply(requestDto.getEmbryo().getContainer()))
                     .boxes(requestDto.getEmbryo().getBoxes().map(boxMapper::map))

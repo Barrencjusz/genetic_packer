@@ -26,9 +26,11 @@ public class EdgeVolumeCalculator implements Function<Traversable<Bounds>, Doubl
 
     @Override
     public Double apply(Traversable<Bounds> allBoxesBounds) {
-        return boundsGetters
-            .map(boundingSizeCalculatorCreator.from(allBoxesBounds))
-            .map(Double::valueOf)
-            .reduce((a, b) -> a * b);
+        final Double volume = boundsGetters
+                .toStream()
+                .map(boundingSizeCalculatorCreator.from(allBoxesBounds))
+                .map(Double::valueOf)
+                .reduce((a, b) -> a * b);
+        return volume;
     }
 }
