@@ -36,7 +36,7 @@ public class RoulettePairSelectorCreator implements PairSelector.Creator<Double>
     @Override
     public <M extends FitnessTested<Double>> PairSelector<M> from(Traversable<M> fitnessTesteds) {
         return sizeFunction -> {
-            fitnessSum = fitnessTesteds.toList().map(FitnessTested::getFitness).map(Fitness::get).sum().doubleValue();
+            fitnessSum = fitnessTesteds.map(FitnessTested::getFitness).map(Fitness::get).sum().doubleValue();
             TreeMap<Double, M> treeMap = rouletteDistancer.distance(fitnessTesteds);
 
             return Stream.continually(getPair(treeMap)).take(sizeFunction.apply(fitnessTesteds.size()));

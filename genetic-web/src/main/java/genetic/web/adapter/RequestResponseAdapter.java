@@ -1,4 +1,4 @@
-package genetic.packer.adapter;
+package genetic.web.adapter;
 
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -18,7 +18,6 @@ import genetic.packer.evolution.generation.dto.EmbryoBuilder;
 import genetic.packer.mapper.BoxMapper;
 import javafx.geometry.Bounds;
 import javafx.scene.shape.Box;
-import javaslang.collection.Seq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -56,18 +55,13 @@ public class RequestResponseAdapter implements BiFunction<RequestDto, ParamsDto,
         final Packer.Result<Double, Box> result = packer.apply(context);
 
         return new ResponseDtoBuilder()
-                .topIndividuals(this.createTopIndividualsDtos(result.getTopIndividuals()))
+                .topIndividuals(result.getTopIndividuals().map(this::createTopIndividualDto))
                 .container(requestDto.getEmbryo().getContainer())
                 .generationStats(result.getGenerationStats())
                 .build();
     }
 
-    public Seq<IndividualDto> createTopIndividualsDtos(Seq<DetailedIndividual<Double, Box>> topIndividuals) {
-        return topIndividuals.map(this::createTopIndividualDto);
-
-    }
-
-    public IndividualDto createTopIndividualDto(DetailedIndividual<Double, Box> detailedIndividual) {
+    private IndividualDto createTopIndividualDto(DetailedIndividual<Double, Box> detailedIndividual) {
         return new IndividualDtoBuilder()
             .fitness(detailedIndividual.getFitness().get())
             .translatedBoxes(detailedIndividual

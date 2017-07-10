@@ -7,7 +7,7 @@ public class ParamsDto {
 
     private Boolean showFitness;
 
-    private Boolean perGenerationStats;
+    private Boolean showStatistics;
 
     public Boolean getShowFitness() {
         return showFitness;
@@ -17,11 +17,11 @@ public class ParamsDto {
         this.showFitness = showFitness;
     }
 
-    public Boolean getPerGenerationStats() {
-        return perGenerationStats;
+    public Boolean getShowStatistics() {
+        return showStatistics;
     }
 
-    public void setPerGenerationStats(Boolean perGenerationStats) {
-        this.perGenerationStats = perGenerationStats;
+    public void setShowStatistics(Boolean showStatistics) {
+        this.showStatistics = showStatistics;
     }
 }
