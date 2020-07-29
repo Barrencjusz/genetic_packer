@@ -1,18 +1,15 @@
 package genetic.packer.fx.translation;
 
-import javafx.geometry.Bounds;
-import javafx.scene.shape.Box;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Supplier;
 
-/**
- * @author piotr.larysz
- */
+import javafx.geometry.Bounds;
+import javafx.scene.shape.Box;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 @Component
 public class BoundsAwareBoxTranslationRandomizer implements BiConsumer<Box, Bounds> {
 

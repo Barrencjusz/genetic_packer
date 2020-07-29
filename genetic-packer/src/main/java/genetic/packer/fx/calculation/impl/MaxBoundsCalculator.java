@@ -1,12 +1,9 @@
 package genetic.packer.fx.calculation.impl;
 
-import org.springframework.stereotype.Component;
-
 import java.util.function.BiFunction;
 
-/**
- * @author piotr.larysz
- */
+import org.springframework.stereotype.Component;
+
 @Component
 public class MaxBoundsCalculator implements BiFunction<Double, Double, Integer> {
 

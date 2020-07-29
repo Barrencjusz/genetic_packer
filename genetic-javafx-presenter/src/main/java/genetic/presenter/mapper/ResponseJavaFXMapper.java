@@ -14,9 +14,6 @@ import javafx.scene.shape.Box;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-/**
- * @author piotr.larysz
- */
 @Component
 public class ResponseJavaFXMapper {
 

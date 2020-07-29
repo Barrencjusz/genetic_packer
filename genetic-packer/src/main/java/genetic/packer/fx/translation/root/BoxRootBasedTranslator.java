@@ -6,9 +6,6 @@ import java.util.function.Function;
 import javafx.geometry.Bounds;
 import javafx.scene.shape.Box;
 
-/**
- * @author piotr.larysz
- */
 public abstract class BoxRootBasedTranslator implements BiConsumer<Box, Integer> {
 
     private BiConsumer<Box, Double> translationSetter;

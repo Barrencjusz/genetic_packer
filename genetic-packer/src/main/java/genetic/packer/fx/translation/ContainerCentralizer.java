@@ -1,13 +1,10 @@
 package genetic.packer.fx.translation;
 
+import java.util.function.Consumer;
+
 import javafx.scene.shape.Box;
 import org.springframework.stereotype.Component;
 
-import java.util.function.Consumer;
-
-/**
- * @author piotr.larysz
- */
 @Component
 public class ContainerCentralizer implements Consumer<Box> {
 

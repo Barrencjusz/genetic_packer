@@ -3,9 +3,6 @@ package genetic.selectors;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-/**
- * @author piotr.larysz
- */
 @RunWith(SpringJUnit4ClassRunner.class)
 //@SpringApplicationConfiguration(classes = DemoApplication.class)
 public class RouletteDistancerTest {

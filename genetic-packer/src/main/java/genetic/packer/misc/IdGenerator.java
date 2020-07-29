@@ -1,14 +1,10 @@
 package genetic.packer.misc;
 
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
-import org.springframework.stereotype.Component;
-
 import java.util.function.Supplier;
 
-/**
- * @author piotr.larysz
- */
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
 @Component
 @Scope(value = "prototype")
 public class IdGenerator implements Supplier<Integer> {

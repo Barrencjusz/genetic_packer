@@ -1,15 +1,11 @@
 package genetic.presenter.javafx.view.controls;
 
 import javafx.event.EventHandler;
-import javafx.scene.Camera;
 import javafx.scene.input.MouseEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-/**
- * @author piotr.larysz
- */
 @Component
 public class MouseDragEventHandler implements EventHandler<MouseEvent> {
 

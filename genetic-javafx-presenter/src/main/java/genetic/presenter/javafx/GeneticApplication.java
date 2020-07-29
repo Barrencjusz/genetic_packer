@@ -1,5 +1,7 @@
 package genetic.presenter.javafx;
 
+import java.util.function.Consumer;
+
 import com.sun.javafx.application.LauncherImpl;
 import genetic.packer.GeneticPackerApplication;
 import genetic.packer.Runner;
@@ -12,11 +14,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.scheduling.annotation.EnableAsync;
 
-import java.util.function.Consumer;
-
-/**
- * @author piotr.larysz
- */
 @SpringBootApplication
 @EnableAsync
 @ComponentScan(basePackages = "genetic",

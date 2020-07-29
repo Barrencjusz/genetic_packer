@@ -2,9 +2,6 @@ package genetic.presenter.javafx.view.controls;
 
 import org.springframework.stereotype.Component;
 
-/**
- * @author piotr.larysz
- */
 @Component
 public class MousePositions {
 

@@ -15,15 +15,16 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.bsc.maven</groupId>
-                <artifactId>maven-processor-plugin</artifactId>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
+
     <dependencies>
         <dependency>
-            <groupId>io.javaslang</groupId>
-            <artifactId>javaslang</artifactId>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-stdlib-jdk8</artifactId>
         </dependency>
     </dependencies>
 </project>

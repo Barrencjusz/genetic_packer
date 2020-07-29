@@ -1,0 +1,20 @@
+<html lang="en">
+<body>
+<canvas id="container" height="500" width="500"></canvas>
+
+<script>
+    const c = document.getElementById("container");
+    const ctx = c.getContext("2d");
+    const evtSource = new EventSource("/fluxBoxes");
+    evtSource.onmessage = function (event) {
+        let box = JSON.parse(event.data);
+        ctx.beginPath();
+        ctx.rect(50 + box.width, 50 + box.depth, box.width * 20, box.depth * 20)
+        ctx.stroke();
+    }
+    evtSource.onerror = e => {
+        evtSource.close()
+    };
+</script>
+</body>
+</html>

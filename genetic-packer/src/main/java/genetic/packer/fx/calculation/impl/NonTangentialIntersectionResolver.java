@@ -6,9 +6,6 @@ import javafx.geometry.Bounds;
 import javafx.scene.shape.Box;
 import org.springframework.stereotype.Component;
 
-/**
- * @author piotr.larysz
- */
 @Component
 public class NonTangentialIntersectionResolver implements BiPredicate<Box, Box> {
 

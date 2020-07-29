@@ -1,15 +1,10 @@
 package genetic.packer.fx.config;
 
-import java.util.function.BiConsumer;
-
 import genetic.packer.fx.specification.BoxTranslator;
 import javafx.scene.shape.Box;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-/**
- * @author piotr.larysz
- */
 @Configuration
 public class TranslationConfig {
 

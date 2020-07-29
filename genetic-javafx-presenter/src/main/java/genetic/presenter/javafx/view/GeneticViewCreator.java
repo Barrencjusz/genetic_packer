@@ -1,5 +1,7 @@
 package genetic.presenter.javafx.view;
 
+import java.util.function.Consumer;
+
 import genetic.packer.dto.response.IndividualDto;
 import genetic.packer.dto.response.ResponseDto;
 import genetic.presenter.javafx.view.controls.CameraHolder;
@@ -12,11 +14,6 @@ import javafx.scene.shape.DrawMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.function.Consumer;
-
-/**
- * @author piotr.larysz
- */
 @Component
 public class GeneticViewCreator implements Consumer<ResponseDto> {
 

@@ -3,25 +3,15 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>pl.piteron</groupId>
 	<artifactId>genetic-web</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
-	<name>genetic-web</name>
-	<description>Demo project for Spring Boot</description>
-
 	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.3.3.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<groupId>pl.piteron</groupId>
+		<artifactId>genetic-parent</artifactId>
+		<version>1.0-SNAPSHOT</version>
+		<relativePath>../genetic-parent</relativePath>
 	</parent>
-
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java.version>1.8</java.version>
-	</properties>
 
 	<dependencies>
 		<dependency>
@@ -30,15 +20,8 @@
 		</dependency>
 
 		<dependency>
-			<groupId>io.javaslang</groupId>
-			<artifactId>javaslang-jackson</artifactId>
-			<version>2.0.4</version>
-		</dependency>
-
-		<dependency>
 			<groupId>pl.piteron</groupId>
 			<artifactId>genetic-packer</artifactId>
-			<version>1.0-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>

@@ -32,16 +32,15 @@
 
 package genetic.presenter.javafx.view.controls;
 
+import java.util.function.Supplier;
+
 import javafx.scene.Camera;
 import javafx.scene.Group;
 import javafx.scene.transform.Rotate;
-import javafx.scene.transform.Scale;
 import javafx.scene.transform.Translate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
-import java.util.function.Supplier;
 
 @Component
 public class CameraHolder extends Group {

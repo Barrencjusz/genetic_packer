@@ -1,13 +1,9 @@
 package genetic.presenter.rest;
 
+import java.util.concurrent.Future;
+
 import org.springframework.scheduling.annotation.Async;
 
-import java.util.concurrent.Future;
-import java.util.function.Function;
-
-/**
- * @author piotr.larysz
- */
 public interface AsyncFunction<I, O> {
 
     @Async
