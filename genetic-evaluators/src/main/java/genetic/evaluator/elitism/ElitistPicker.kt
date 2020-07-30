@@ -5,8 +5,5 @@ import genetic.api.individual.impl.RatedIndividual
 
 interface ElitistPicker {
 
-  fun <T> pick(
-      fitnessTesteds: Sequence<RatedIndividual<T>>,
-      count: Int
-  ): Sequence<Individual<T>>
+  fun <T> pick(fitnessTesteds: Iterable<RatedIndividual<T>>): Sequence<Individual<T>>
 }

@@ -2,10 +2,9 @@ package genetic.selectors
 
 import genetic.api.individual.Rated
 
-interface PairSelector {
+interface PairSelector<T : Rated> {
 
-  fun <M : Rated> select(
-      fitnessTesteds: Sequence<M>,
-      sizeFunction: (Int) -> Int
-  ): Sequence<Pair<M, M>>
+  fun select(): Sequence<Pair<T, T>>
+
+  interface Factory<T : Rated> : (Iterable<T>) -> PairSelector<T>
 }

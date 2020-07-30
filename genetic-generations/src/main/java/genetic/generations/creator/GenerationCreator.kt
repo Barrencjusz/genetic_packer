@@ -1,26 +1,24 @@
 package genetic.generations.creator
 
+import genetic.api.generation.Generation
 import genetic.api.generation.GenerationContext
 import genetic.api.individual.Evaluated
 import genetic.api.individual.Individual
 import genetic.evaluator.EvaluatorImpl
-import genetic.api.generation.Generation
 import java.util.function.Supplier
 
 class GenerationCreator<T, P>(
     private val context: GenerationContext<T>,
     private val firstGenerationCreator: (T, Int) -> Sequence<Individual<P>>,
     private val ongoingGenerationCreator: (Generation<P>, GenerationContext<T>) -> Sequence<Individual<P>>,
-    private val idGenerator: Supplier<Int>,
+    private val idGenerator: () -> Int,
     private val evaluator: EvaluatorImpl
 ) : () -> Generation<P> {
 
-  private val subsequentGenerations: MutableList<Generation<P>> = mutableListOf()
+  private lateinit var lastGeneration: Generation<P>
 
   private val ongoingStrategy = {
-    ongoingGenerationCreator(
-        subsequentGenerations.last(), context
-    )
+    ongoingGenerationCreator(lastGeneration, context)
   }
 
   private val firstTimeStrategy = {
@@ -34,11 +32,11 @@ class GenerationCreator<T, P>(
       .let { rateIndividuals(it) }
       .let {
         Generation(
-            number = idGenerator.get(),
-            ratedIndividuals = it
+            number = idGenerator(),
+            ratedIndividuals = it.toList()
         )
       }
-      .also { subsequentGenerations.add(it) }
+      .also { lastGeneration = it }
 
   private fun rateIndividuals(individuals: Sequence<Evaluated<P>>) =
       individuals.map { it.evaluate(evaluator) }

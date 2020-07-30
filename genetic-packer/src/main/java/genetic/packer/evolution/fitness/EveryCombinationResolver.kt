@@ -1,6 +1,5 @@
 package genetic.packer.evolution.fitness
 
-import java.util.AbstractMap
 import java.util.ArrayList
 
 class EveryCombinationResolver {

@@ -3,9 +3,9 @@ package genetic.api.individual.impl
 import genetic.api.elitism.EliteAcknowledged
 import genetic.api.elitism.Promoter
 import genetic.api.fitness.Fitness
-import genetic.api.individual.Rated
 import genetic.api.individual.Organism
 import genetic.api.individual.Promoted
+import genetic.api.individual.Rated
 
 open class RatedIndividual<T>(
     override val fitness: Fitness,

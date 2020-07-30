@@ -3,7 +3,6 @@ package genetic.packer.mapper
 import genetic.packer.dto.request.ContainerDto
 import genetic.packer.factory.ContainerBoundsFactory
 import javafx.geometry.Bounds
-import org.mapstruct.Mapper
 
 abstract class ContainerToBoundsMapper : (ContainerDto) -> Bounds {
 

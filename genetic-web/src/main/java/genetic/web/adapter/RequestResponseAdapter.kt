@@ -1,7 +1,6 @@
 package genetic.web.adapter
 
 import genetic.Evolution
-import genetic.api.individual.Cell
 import genetic.api.individual.impl.DetailedIndividual
 import genetic.packer.dto.request.ContainerDto
 import genetic.packer.dto.request.EmbryoDto

@@ -3,9 +3,7 @@ package genetic.packer.fx.calculation.impl
 import genetic.packer.fx.calculation.BoundingSizeCalculator
 import genetic.packer.fx.specification.BoundsGetter
 import javafx.geometry.Bounds
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
-import java.util.function.Function
 
 @Component
 class EdgeVolumeCalculator(

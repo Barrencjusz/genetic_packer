@@ -3,7 +3,6 @@ package genetic.packer.config
 import javafx.scene.shape.Box
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import java.util.function.BiConsumer
 
 @Configuration
 class BoxTranslationListConfig {

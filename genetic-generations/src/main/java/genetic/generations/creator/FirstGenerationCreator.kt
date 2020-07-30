@@ -10,4 +10,6 @@ class FirstGenerationCreator<P, T>(
       embryo: T,
       size: Int
   ) = individualCreator(embryo).let { generateSequence { it() }.take(size) }
+      .toList()
+      .asSequence()
 }

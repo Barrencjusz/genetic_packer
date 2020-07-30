@@ -2,8 +2,6 @@ package genetic.packer.mapper
 
 import genetic.api.individual.Cell
 import javafx.scene.shape.Box
-import org.mapstruct.Mapper
-import java.util.function.Function
 
 abstract class CellCloningMapper : (Cell<Box>) -> Cell<Box> {
 

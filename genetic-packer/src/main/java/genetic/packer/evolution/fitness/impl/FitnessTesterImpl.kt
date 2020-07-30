@@ -1,10 +1,10 @@
 package genetic.packer.evolution.fitness.impl
 
+import genetic.api.fitness.FitnessTranslator
 import genetic.api.individual.Individual
 import genetic.packer.evolution.fitness.BoxScoreProperties
 import genetic.packer.evolution.fitness.EveryCombinationResolver
 import genetic.packer.evolution.fitness.FitnessComponents
-import genetic.api.fitness.FitnessTranslator
 import javafx.geometry.Bounds
 import javafx.scene.shape.Box
 

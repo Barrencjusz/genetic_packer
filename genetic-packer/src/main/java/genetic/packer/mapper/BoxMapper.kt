@@ -4,7 +4,6 @@ import genetic.packer.dto.BoxDto
 import genetic.packer.dto.response.TranslatedBoxDto
 import genetic.packer.dto.response.TranslationDto
 import javafx.scene.shape.Box
-import org.mapstruct.Mapper
 
 class BoxMapper {
 

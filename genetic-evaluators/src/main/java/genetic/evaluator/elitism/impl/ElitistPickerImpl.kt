@@ -7,10 +7,7 @@ class ElitistPickerImpl(
     private val promoter: PromoterImpl // FIXME not impl
 ) : ElitistPicker {
 
-  override fun <T> pick(
-      fitnessTesteds: Sequence<RatedIndividual<T>>,
-      count: Int
-  ) = fitnessTesteds.sortedByDescending { it.fitness.score }
-      .take(count)
-      .map { it.promote(promoter) }
+  override fun <T> pick(fitnessTesteds: Iterable<RatedIndividual<T>>) =
+      fitnessTesteds.sortedByDescending { it.fitness.score }
+          .map { it.promote(promoter) }.asSequence()
 }

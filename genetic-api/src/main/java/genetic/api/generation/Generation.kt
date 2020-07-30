@@ -4,5 +4,5 @@ import genetic.api.individual.impl.RatedIndividual
 
 data class Generation<T>(
     val number: Int,
-    val ratedIndividuals: Sequence<RatedIndividual<T>>
+    val ratedIndividuals: List<RatedIndividual<T>>
 )

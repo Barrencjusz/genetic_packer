@@ -1,7 +1,7 @@
 package genetic.packer.dto.response
 
-import genetic.packer.dto.BoxDto
 import genetic.api.statistics.GenerationStatistics
+import genetic.packer.dto.BoxDto
 
 data class ResponseDto(
     val container: BoxDto,

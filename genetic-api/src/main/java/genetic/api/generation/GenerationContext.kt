@@ -1,6 +1,6 @@
 package genetic.api.generation
 
-class GenerationContext<T>(
+data class GenerationContext<T>(
     val embryo: T,
     val chromosomeSize: Int,
     val generationSize: Int,

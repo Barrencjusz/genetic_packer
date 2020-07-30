@@ -1,7 +1,7 @@
 package genetic.packer.evolution.fitness.impl
 
-import genetic.packer.evolution.fitness.FitnessComponents
 import genetic.api.fitness.FitnessTranslator
+import genetic.packer.evolution.fitness.FitnessComponents
 
 class TotalFitnessTranslator : BaseFitnessTranslator(),
     FitnessTranslator<FitnessComponents, Double> {

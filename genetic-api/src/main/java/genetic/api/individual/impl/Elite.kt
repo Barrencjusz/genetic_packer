@@ -3,7 +3,6 @@ package genetic.api.individual.impl
 import genetic.api.elitism.EliteAcknowledged
 import genetic.api.elitism.Promoter
 import genetic.api.fitness.Evaluator
-import genetic.api.individual.Cell
 import genetic.api.individual.Individual
 import genetic.api.individual.Promoted
 
