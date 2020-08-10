@@ -69,6 +69,12 @@
 
             <dependency>
                 <groupId>pl.piteron</groupId>
+                <artifactId>genetic-packer-2d</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>pl.piteron</groupId>
                 <artifactId>genetic-evolution</artifactId>
                 <version>${project.version}</version>
             </dependency>

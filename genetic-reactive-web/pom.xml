@@ -34,7 +34,7 @@
 
 		<dependency>
 			<groupId>pl.piteron</groupId>
-			<artifactId>genetic-packer</artifactId>
+			<artifactId>genetic-packer-2d</artifactId>
 		</dependency>
 
 		<dependency>

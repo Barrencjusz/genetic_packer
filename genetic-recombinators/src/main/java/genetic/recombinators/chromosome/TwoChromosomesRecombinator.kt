@@ -1,25 +1,23 @@
 package genetic.recombinators.chromosome
 
-import genetic.api.individual.Cell
 import java.util.concurrent.ThreadLocalRandom
 
 class TwoChromosomesRecombinator<T>(
-    random: () -> ThreadLocalRandom,
-    cellCloner: (Cell<T>) -> Cell<T>
-) : ChromosomeRecombinator<T>(random = random, cellCloner = cellCloner) {
+    random: () -> ThreadLocalRandom
+) : ChromosomeRecombinator<T>(random = random) {
 
   override fun recombine(
-      first: Sequence<Cell<T>>,
-      second: Sequence<Cell<T>>,
+      first: Sequence<T>,
+      second: Sequence<T>,
       exchangePoint: Int
-  ): Sequence<Sequence<Cell<T>>> {
+  ): Sequence<Sequence<T>> {
     val firstChildChromosome = first.take(exchangePoint) + second.drop(exchangePoint)
     val secondChildChromosome = second.take(exchangePoint) + first.drop(exchangePoint)
     return sequenceOf(firstChildChromosome, secondChildChromosome)
   }
 
   override fun resolveDefault(
-      first: Sequence<Cell<T>>,
-      second: Sequence<Cell<T>>
-  ) = sequenceOf(first + second)
+      first: Sequence<T>,
+      second: Sequence<T>
+  ) = sequenceOf(first, second)
 }

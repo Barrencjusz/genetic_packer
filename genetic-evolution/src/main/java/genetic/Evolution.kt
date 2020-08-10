@@ -18,20 +18,26 @@ class Evolution<T, P>(
 
   @OptIn(ExperimentalTime::class)
   operator fun invoke(context: Context<P>) = with(generationsFactory(contextMapper(context))) {
-    generateSequence { val timedValue = measureTimedValue { this() }
-//      println(timedValue.duration)
+    var bestScore = 0.0
+    generateSequence {
+      val timedValue = measureTimedValue { this() }
+      //      println(timedValue.duration)
       timedValue.value
-    }
-        .take(context.numberOfGenerations)
-        .toList()
-        .asSequence()
-        .let {
-          Result(
-              generations = it,
-              topIndividuals = bestIndividualsSelector(it).take(context.numberOfTopIndividuals),
-              generationStats = generationStatisticsCreator.create(it)
-          )
+    }.take(context.numberOfGenerations)
+        .map { it.ratedIndividuals.maxBy { it.fitness.score }!! }
+        .filter {
+          (if (it.fitness.score > bestScore) {
+            bestScore = it.fitness.score
+            true
+          } else false)
         }
+    //        .let {
+    //          Result(
+    //              generations = it,
+    //              topIndividuals = //bestIndividualsSelector(it).take(context.numberOfTopIndividuals),
+    //              generationStats = generationStatisticsCreator.create(it)
+    //          )
+    //        }
   }
 
   data class Context<T>(

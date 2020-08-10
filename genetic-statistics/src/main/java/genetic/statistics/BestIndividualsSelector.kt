@@ -10,11 +10,11 @@ class BestIndividualsSelector<T> : (Sequence<Generation<T>>) -> Sequence<Detaile
       .sortedBy { it.fitness.score }
 
   private fun toDetailedIndividuals(generation: Generation<T>) = generation.ratedIndividuals
+      .asSequence()
       .map {
         DetailedIndividual(
             ratedIndividual = it,
             numberOfGeneration = generation.number
         )
       }
-      .asSequence()
 }

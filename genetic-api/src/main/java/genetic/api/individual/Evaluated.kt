@@ -6,5 +6,5 @@ import genetic.api.individual.impl.RatedIndividual
 
 interface Evaluated<T> {
 
-  fun <M> evaluate(evaluator: M): RatedIndividual<T> where M : Evaluator, M : EliteAcknowledged
+  fun <M> evaluate(evaluator: M): RatedIndividual<T> where M : Evaluator<T>, M : EliteAcknowledged
 }

@@ -10,7 +10,7 @@ class Elite<T>(
     ratedIndividual: RatedIndividual<T>
 ) : RatedIndividual<T>(ratedIndividual.fitness, ratedIndividual), Individual<T>, Promoted<T> {
 
-  override fun <M> evaluate(evaluator: M) where M : Evaluator, M : EliteAcknowledged =
+  override fun <M> evaluate(evaluator: M) where M : Evaluator<T>, M : EliteAcknowledged =
       evaluator(this)
 
   override fun <M> promote(promoter: M) where M : Promoter, M : EliteAcknowledged =

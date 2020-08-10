@@ -17,7 +17,7 @@ class FitnessTesterImpl(
 ) : (Individual<Box>) -> FitnessComponents {
 
   override fun invoke(individual: Individual<Box>): FitnessComponents {
-    val boxScorePropertiesList = individual.cells
+    val boxScorePropertiesList = individual.body.cells
         .map { it.nucleus }
         .map { BoxScoreProperties(it) }
     everyCombinationResolver(boxScorePropertiesList.toList())

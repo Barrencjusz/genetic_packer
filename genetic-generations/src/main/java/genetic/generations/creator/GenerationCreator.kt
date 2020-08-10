@@ -2,17 +2,15 @@ package genetic.generations.creator
 
 import genetic.api.generation.Generation
 import genetic.api.generation.GenerationContext
-import genetic.api.individual.Evaluated
 import genetic.api.individual.Individual
 import genetic.evaluator.EvaluatorImpl
-import java.util.function.Supplier
 
 class GenerationCreator<T, P>(
     private val context: GenerationContext<T>,
     private val firstGenerationCreator: (T, Int) -> Sequence<Individual<P>>,
     private val ongoingGenerationCreator: (Generation<P>, GenerationContext<T>) -> Sequence<Individual<P>>,
     private val idGenerator: () -> Int,
-    private val evaluator: EvaluatorImpl
+    private val evaluator: EvaluatorImpl<P>
 ) : () -> Generation<P> {
 
   private lateinit var lastGeneration: Generation<P>
@@ -29,7 +27,7 @@ class GenerationCreator<T, P>(
   private var strategy: () -> Sequence<Individual<P>> = firstTimeStrategy
 
   override fun invoke() = strategy()
-      .let { rateIndividuals(it) }
+      .map { it.evaluate(evaluator) }
       .let {
         Generation(
             number = idGenerator(),
@@ -38,6 +36,4 @@ class GenerationCreator<T, P>(
       }
       .also { lastGeneration = it }
 
-  private fun rateIndividuals(individuals: Sequence<Evaluated<P>>) =
-      individuals.map { it.evaluate(evaluator) }
 }

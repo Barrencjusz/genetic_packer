@@ -8,9 +8,9 @@ import genetic.recombinators.chromosome.ChromosomeRecombinator
 
 abstract class ChildRecombinator<T>(
     private val chromosomeRecombinator: ChromosomeRecombinator<T>
-) : Recombinator<Organism<T>, Individual<T>> {
+) : Recombinator<Organism<Sequence<T>>, Individual<Sequence<T>>> { // FIXME it should be more general
 
-  override fun invoke(pair: Pair<Organism<T>, Organism<T>>) = pair.let { Pair(it.first.cells, it.second.cells) }
+  override fun invoke(pair: Pair<Organism<Sequence<T>>, Organism<Sequence<T>>>) = pair.let { Pair(it.first.body, it.second.body) }
       .let(chromosomeRecombinator)
       .map { SimpleIndividual(it) }
 }

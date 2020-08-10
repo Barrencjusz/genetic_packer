@@ -1,7 +1,7 @@
 package genetic
 
 import genetic.api.fitness.Fitness
-import genetic.api.fitness.TranslatedFitness
+import genetic.api.fitness.FitnessTester
 import genetic.api.generation.Generation
 import genetic.api.generation.GenerationContext
 import genetic.api.individual.Individual
@@ -51,7 +51,7 @@ abstract class EvolutionAutoConfiguration<T, P> {
       firstGenerationCreator: (T, Int) -> Sequence<Individual<P>>,
       ongoingGenerationCreator: (Generation<P>, GenerationContext<T>) -> Sequence<Individual<P>>,
       idGenerator: () -> Int,
-      evaluator: EvaluatorImpl
+      evaluator: EvaluatorImpl<P>
   ): (GenerationContext<T>) -> () -> Generation<P> = {
     object : () -> Generation<P> {
 
@@ -124,7 +124,7 @@ abstract class EvolutionAutoConfiguration<T, P> {
   }
 
   @Bean
-  fun evaluator(fitnessTester: (Individual<*>) -> TranslatedFitness<*>) = EvaluatorImpl(fitnessTester)
+  fun evaluator(fitnessTester: FitnessTester<P>) = EvaluatorImpl(fitnessTester)
 
   @Bean
   fun generationStatisticsCreator(

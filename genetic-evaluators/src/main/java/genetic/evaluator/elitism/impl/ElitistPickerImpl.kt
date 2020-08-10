@@ -9,5 +9,6 @@ class ElitistPickerImpl(
 
   override fun <T> pick(fitnessTesteds: Iterable<RatedIndividual<T>>) =
       fitnessTesteds.sortedByDescending { it.fitness.score }
-          .map { it.promote(promoter) }.asSequence()
+          .asSequence()
+          .map { it.promote(promoter) }
 }

@@ -3,7 +3,7 @@ package genetic.api.fitness
 import genetic.api.individual.Individual
 import genetic.api.individual.impl.RatedIndividual
 
-interface Evaluator {
+interface Evaluator<T> {
 
-  operator fun <T> invoke(individual: Individual<T>): RatedIndividual<T>
+  operator fun invoke(individual: Individual<T>): RatedIndividual<T>
 }

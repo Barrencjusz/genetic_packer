@@ -21,22 +21,21 @@ class OngoingGenerationCreator<T, P>( //todo feature toggle for cloning????
   override fun invoke(
       generation: Generation<P>,
       evolutionContext: GenerationContext<T>
-  ): Sequence<Individual<P>> {
-    val elites = elitistPicker.pick(fitnessTesteds = generation.ratedIndividuals)
-        .take(evolutionContext.numberOfEliteIndividuals)
-
-    val pairSelector = pairSelectorFactory(generation.ratedIndividuals)
-    return pairSelector.select()
-        .take((generation.ratedIndividuals.count() - elites.count()) / 2)
-        .toList()
-        .asSequence()
+  ) = with(pairSelectorFactory(generation.ratedIndividuals)) {
+    this.select()
+        .take((generation.ratedIndividuals.size - evolutionContext.numberOfEliteIndividuals) / 2)
         .flatMap(twoChildrenRecombinator)
         .plus(
             createSingleForEven(
-                pairSelector = pairSelector,
+                pairSelector = this,
                 numberOfNewIndividualsIsOdd = evolutionContext.numberOfEliteIndividuals % 2 != 0
             )
-                .onEach { mutator(it, evolutionContext.embryo) }) + elites
+        )
+        //.onEach { mutator(it, evolutionContext.embryo) } FIXME cast issue
+        .plus(
+            elitistPicker.pick(generation.ratedIndividuals)
+                .take(evolutionContext.numberOfEliteIndividuals)
+        )
   }
 
   private fun createSingleForEven(
