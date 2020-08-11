@@ -3,13 +3,13 @@ package genetic.recombinators.chromosome
 import genetic.recombinators.Recombinator
 import java.util.concurrent.ThreadLocalRandom
 
-abstract class ChromosomeRecombinator<T>(
+abstract class ChromosomeRecombinator<T, U>(
     protected val random: () -> ThreadLocalRandom
-) : Recombinator<Sequence<T>, Sequence<T>> {
+) : Recombinator<Sequence<T>, Sequence<T>, U> {
 
   private val recombination: () -> Boolean = { random().nextDouble() <= 0.7 }
 
-  override fun invoke(pair: Pair<Sequence<T>, Sequence<T>>) =
+  override fun invoke(pair: Pair<Sequence<T>, Sequence<T>>, embryo: U) = // FIXME remove embryo? =
       pair.let { (first, second) ->
         if (recombination()) {
           recombine(

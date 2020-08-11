@@ -51,7 +51,7 @@ abstract class EvolutionAutoConfiguration<T, P> {
       firstGenerationCreator: (T, Int) -> Sequence<Individual<P>>,
       ongoingGenerationCreator: (Generation<P>, GenerationContext<T>) -> Sequence<Individual<P>>,
       idGenerator: () -> Int,
-      evaluator: EvaluatorImpl<P>
+      evaluatorFactory: (T) -> EvaluatorImpl<P, T>
   ): (GenerationContext<T>) -> () -> Generation<P> = {
     object : () -> Generation<P> {
 
@@ -60,7 +60,7 @@ abstract class EvolutionAutoConfiguration<T, P> {
           firstGenerationCreator = firstGenerationCreator,
           ongoingGenerationCreator = ongoingGenerationCreator,
           idGenerator = idGenerator,
-          evaluator = evaluator
+          evaluator = evaluatorFactory(it.embryo)
       )
 
       override fun invoke() = generationCreator()
@@ -76,8 +76,8 @@ abstract class EvolutionAutoConfiguration<T, P> {
   fun ongoingGenerationCreator(
       elitistPicker: ElitistPicker,
       pairSelectorFactory: PairSelector.Factory<RatedIndividual<P>>,
-      singleChildRecombinator: Recombinator<Organism<P>, Individual<P>>,
-      twoChildrenRecombinator: Recombinator<Organism<P>, Individual<P>>,
+      singleChildRecombinator: Recombinator<Organism<P>, Individual<P>, T>,
+      twoChildrenRecombinator: Recombinator<Organism<P>, Individual<P>, T>,
       mutator: Mutator<T, P>
   ) = OngoingGenerationCreator(
       elitistPicker = elitistPicker,
@@ -124,7 +124,12 @@ abstract class EvolutionAutoConfiguration<T, P> {
   }
 
   @Bean
-  fun evaluator(fitnessTester: FitnessTester<P>) = EvaluatorImpl(fitnessTester)
+  fun evaluatorFactory(fitnessTester: FitnessTester<P, T>) = { embryo: T ->
+    EvaluatorImpl(
+        fitnessTester = fitnessTester,
+        embryo = embryo
+    )
+  }
 
   @Bean
   fun generationStatisticsCreator(

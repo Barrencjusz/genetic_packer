@@ -43,9 +43,8 @@ class Evolution<T, P>(
   data class Context<T>(
       val numberOfGenerations: Int,
       val generationSize: Int,
-      val embryo: T,
-      val numberOfTopIndividuals: Int,
-      val numberOfEliteIndividuals: Int
+      val numberOfEliteIndividuals: Int,
+      val embryo: T
   )
 
   data class Result<T>(

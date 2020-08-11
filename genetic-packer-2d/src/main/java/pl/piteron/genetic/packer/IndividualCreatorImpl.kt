@@ -16,12 +16,7 @@ class IndividualCreatorImpl(
         .map { random.nextInt() to it }
         .sortedBy { it.first }
         .map { (loadingOrder, box) ->
-          val rotated =
-              when {
-                box.width > embryo.containerWidth -> true
-                box.depth > embryo.containerWidth -> false
-                else -> random.nextBoolean()
-              } // FIXME calculate once on startup
+          val rotated = if (box.canBeRotated) random.nextBoolean() else false
           val x = random.nextInt(embryo.containerWidth + 1 - if (rotated) box.depth else box.width)
           val y = container.put(box = box, x = x, rotated = rotated)
           PositionedBox(box = box, x = x, y = y, rotated = rotated, loadingOrder = loadingOrder)

@@ -10,7 +10,7 @@ class GenerationCreator<T, P>(
     private val firstGenerationCreator: (T, Int) -> Sequence<Individual<P>>,
     private val ongoingGenerationCreator: (Generation<P>, GenerationContext<T>) -> Sequence<Individual<P>>,
     private val idGenerator: () -> Int,
-    private val evaluator: EvaluatorImpl<P>
+    private val evaluator: EvaluatorImpl<P, T>
 ) : () -> Generation<P> {
 
   private lateinit var lastGeneration: Generation<P>

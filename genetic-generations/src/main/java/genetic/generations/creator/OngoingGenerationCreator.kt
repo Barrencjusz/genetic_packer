@@ -13,8 +13,8 @@ import genetic.selectors.PairSelector
 class OngoingGenerationCreator<T, P>( //todo feature toggle for cloning????
     private val elitistPicker: ElitistPicker,
     private val pairSelectorFactory: PairSelector.Factory<RatedIndividual<P>>,
-    private val singleChildRecombinator: Recombinator<Organism<P>, Individual<P>>,
-    private val twoChildrenRecombinator: Recombinator<Organism<P>, Individual<P>>,
+    private val singleChildRecombinator: Recombinator<Organism<P>, Individual<P>, T>,
+    private val twoChildrenRecombinator: Recombinator<Organism<P>, Individual<P>, T>,
     private val mutator: Mutator<T, P>
 ) : (Generation<P>, GenerationContext<T>) -> Sequence<Individual<P>> {
 
@@ -24,10 +24,11 @@ class OngoingGenerationCreator<T, P>( //todo feature toggle for cloning????
   ) = with(pairSelectorFactory(generation.ratedIndividuals)) {
     this.select()
         .take((generation.ratedIndividuals.size - evolutionContext.numberOfEliteIndividuals) / 2)
-        .flatMap(twoChildrenRecombinator)
+        .flatMap { twoChildrenRecombinator(it, evolutionContext.embryo) }
         .plus(
             createSingleForEven(
                 pairSelector = this,
+                embryo = evolutionContext.embryo,
                 numberOfNewIndividualsIsOdd = evolutionContext.numberOfEliteIndividuals % 2 != 0
             )
         )
@@ -40,11 +41,12 @@ class OngoingGenerationCreator<T, P>( //todo feature toggle for cloning????
 
   private fun createSingleForEven(
       pairSelector: PairSelector<RatedIndividual<P>>,
+      embryo: T,
       numberOfNewIndividualsIsOdd: Boolean
   ) = if (numberOfNewIndividualsIsOdd) {
     pairSelector.select()
         .take(1)
         .single()
-        .let(singleChildRecombinator)
+        .let { singleChildRecombinator(it, embryo) }
   } else emptySequence()
 }

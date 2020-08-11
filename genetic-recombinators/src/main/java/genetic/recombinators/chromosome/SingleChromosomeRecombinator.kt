@@ -2,9 +2,9 @@ package genetic.recombinators.chromosome
 
 import java.util.concurrent.ThreadLocalRandom
 
-class SingleChromosomeRecombinator<T>(
+class SingleChromosomeRecombinator<T, U>(
     random: () -> ThreadLocalRandom
-) : ChromosomeRecombinator<T>(random = random) {
+) : ChromosomeRecombinator<T, U>(random = random) {
 
   override fun recombine(
       first: Sequence<T>,

@@ -31,11 +31,10 @@ class FitnessLoggingAdapter(
       val evolutionContext: Evolution.Context<Embryo> = Evolution.Context(
           numberOfGenerations = request.numberOfGenerations,
           generationSize = request.generationSize,
-          numberOfTopIndividuals = request.numberOfTopIndividuals,
           numberOfEliteIndividuals = request.numberOfEliteIndividuals,
           embryo = embryo
       )
-      evolution(evolutionContext).topIndividuals.forEach { println(it.fitness.score) }
+//      evolution(evolutionContext).topIndividuals.forEach { println(it.fitness.score) }
     } catch (e: IOException) {
       e.printStackTrace()
     }

@@ -1,29 +1,141 @@
 <html lang="en">
 <body>
-<canvas id="container" height="1000" width="1000"></canvas>
-
+<div id="canvasHolder"></div>
+<script src="sse.js"></script>
 <script>
-    const multiplier = 15;
-    const c = document.getElementById("container");
+    let boxes = [
+        {
+            width: 4,
+            depth: 6
+        }, {
+            width: 4,
+            depth: 6
+        }, {
+            width: 4,
+            depth: 6
+        }, {
+            width: 4,
+            depth: 6
+        }, {
+            width: 4,
+            depth: 6
+        }, {
+            width: 4,
+            depth: 6
+        }, {
+            width: 4,
+            depth: 6
+        }, {
+            width: 4,
+            depth: 6
+        }, {
+            width: 4,
+            depth: 6
+        }, {
+            width: 4,
+            depth: 6
+        }, {
+            width: 1,
+            depth: 30
+        }, {
+            width: 4,
+            depth: 6
+        }, {
+            width: 4,
+            depth: 6
+        }, {
+            width: 4,
+            depth: 6
+        }, {
+            width: 4,
+            depth: 6
+        }, {
+            width: 4,
+            depth: 6
+        }, {
+            width: 2,
+            depth: 11
+        }, {
+            width: 2,
+            depth: 11
+        }, {
+            width: 4,
+            depth: 6
+        }, {
+            width: 4,
+            depth: 6
+        }, {
+            width: 4,
+            depth: 6
+        }, {
+            width: 4,
+            depth: 6
+        }, {
+            width: 4,
+            depth: 6
+        }, {
+            width: 4,
+            depth: 6
+        }
+    ];
+    boxes.forEach((value, index) => value.id = index + 1);
+
+    const canvas = document.createElement('canvas');
+    canvas.id = "canvas"
+    canvas.width = 1000;
+    canvas.height = 1000;
+
+    containerWidth = 13;
+    containerDepth = 68;
+
+    document.getElementById("canvasHolder").appendChild(canvas)
+    const multiplier = 10;
+    const c = document.getElementById("canvas");
     const ctx = c.getContext("2d");
-    const evtSource = new EventSource("/fluxBoxes");
-    evtSource.onmessage = function (event) {
-        let packerResponse = JSON.parse(event.data);
+    const evtSource = new SSE("/pack", {
+        headers: {'Content-Type': 'application/json'},
+        payload: JSON.stringify({
+            container: {
+                width: containerWidth,
+                depth: containerDepth
+            },
+            boxes: boxes
+        })
+    });
+    evtSource.addEventListener('message', function (event) {
         ctx.clearRect(0, 0, c.width, c.height);
-        packerResponse.body.boxes.forEach(box => {
+        ctx.strokeStyle = "black"
+
+        ctx.rect(0, 0, containerWidth * multiplier, containerDepth * multiplier)
+        ctx.stroke();
+
+        JSON.parse(event.data).body.boxes.forEach(box => {
             const width = box.rotated ? box.box.depth : box.box.width
             const depth = box.rotated ? box.box.width : box.box.depth
+
+            let rectX = box.x * multiplier;
+            let rectY = box.y * multiplier;
+            let rectWidth = width * multiplier;
+            let rectHeight = depth * multiplier;
+
             ctx.fillStyle = "#ff0000"
-            ctx.fillRect(box.x * multiplier, box.y * multiplier, width * multiplier, depth * multiplier)
+            ctx.fillRect(rectX, rectY, rectWidth, rectHeight)
             ctx.beginPath();
-            ctx.strokeStyle = "black"
-            ctx.rect(box.x * multiplier, box.y * multiplier, width * multiplier, depth * multiplier)
+
+            ctx.rect(rectX, rectY, rectWidth, rectHeight)
             ctx.stroke();
+
+            ctx.font = "20px Georgia";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillStyle = "#000000";
+            ctx.fillText(box.box.id, rectX + (rectWidth / 2), rectY + (rectHeight / 2));
         })
-    }
-    evtSource.onerror = e => {
-        evtSource.close()
-    };
+    })
+    evtSource.stream()
+    // evtSource.onerror = e => {
+    //     evtSource.close()
+    // };
 </script>
 </body>
 </html>
