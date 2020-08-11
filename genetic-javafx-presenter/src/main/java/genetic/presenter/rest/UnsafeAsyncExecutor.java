@@ -1,13 +1,10 @@
 package genetic.presenter.rest;
 
-import org.springframework.stereotype.Component;
-
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
-/**
- * @author piotr.larysz
- */
+import org.springframework.stereotype.Component;
+
 @Component
 public class UnsafeAsyncExecutor {
 

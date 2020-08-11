@@ -1,78 +1,54 @@
 {
-  "numberOfGenerations": 100,
-  "generationSize": 50,
-  "numberOfTopIndividuals": 100,
+  "numberOfGenerations": 3000,
+  "generationSize": 40,
+  "numberOfTopIndividuals": 200,
+  "numberOfEliteIndividuals": 2,
   "embryo": {
     "container": {
-      "width": 180,
-      "height": 220,
-      "depth": 400
+      "width": 3,
+      "height": 5,
+      "depth": 5
     },
     "boxes": [
       {
-        "width": 50,
-        "height": 100,
-        "depth": 100
+        "width": 1,
+        "height": 1,
+        "depth": 1
       },
       {
-        "width": 50,
-        "height": 100,
-        "depth": 100
+        "width": 1,
+        "height": 1,
+        "depth": 1
       },
       {
-        "width": 50,
-        "height": 100,
-        "depth": 100
+        "width": 1,
+        "height": 1,
+        "depth": 1
       },
       {
-        "width": 100,
-        "height": 100,
-        "depth": 100
+        "width": 1,
+        "height": 2,
+        "depth": 1
       },
       {
-        "width": 50,
-        "height": 100,
-        "depth": 100
+        "width": 2,
+        "height": 2,
+        "depth": 2
       },
       {
-        "width": 50,
-        "height": 100,
-        "depth": 100
+        "width": 2,
+        "height": 2,
+        "depth": 2
       },
       {
-        "width": 10,
-        "height": 100,
-        "depth": 100
+        "width": 2,
+        "height": 2,
+        "depth": 2
       },
       {
-        "width": 10,
-        "height": 100,
-        "depth": 100
-      },
-      {
-        "width": 10,
-        "height": 100,
-        "depth": 100
-      },
-      {
-        "width": 10,
-        "height": 100,
-        "depth": 100
-      },
-      {
-        "width": 10,
-        "height": 100,
-        "depth": 100
-      },
-      {
-        "width": 10,
-        "height": 100,
-        "depth": 100
-      },
-      {
-        "width": 10,
-        "height": 100,
-        "depth": 100
+        "width": 2,
+        "height": 2,
+        "depth": 2
       }
     ]
   }

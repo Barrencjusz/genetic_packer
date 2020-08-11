@@ -11,47 +11,72 @@
 	</parent>
 
 	<artifactId>genetic-packer</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>genetic-packer</name>
-	<description>Demo project for Spring Boot</description>
-
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java.version>1.8</java.version>
-	</properties>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.jetbrains.kotlin</groupId>
+				<artifactId>kotlin-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
 
 	<dependencies>
 		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<version>1.16.6</version>
+			<groupId>pl.piteron</groupId>
+			<artifactId>genetic-api</artifactId>
 		</dependency>
+
+		<dependency>
+			<groupId>pl.piteron</groupId>
+			<artifactId>genetic-selectors</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>pl.piteron</groupId>
+			<artifactId>genetic-recombinators</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>pl.piteron</groupId>
+			<artifactId>genetic-generations</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>pl.piteron</groupId>
+			<artifactId>genetic-evolution</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>pl.piteron</groupId>
+			<artifactId>genetic-statistics</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-controls</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
 		</dependency>
+
 		<dependency>
-			<groupId>org.hibernate</groupId>
+			<groupId>org.hibernate.validator</groupId>
 			<artifactId>hibernate-validator</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-core</artifactId>
-			<version>2.7.3</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-			<version>2.7.3</version>
 		</dependency>
 
 		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-annotations</artifactId>
-			<version>2.7.3</version>
+			<groupId>com.fasterxml.jackson.module</groupId>
+			<artifactId>jackson-module-kotlin</artifactId>
 		</dependency>
 
 		<dependency>
@@ -59,40 +84,10 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
-			<version>4.2.5.RELEASE</version>
-		</dependency>
-
-		<dependency>
-			<groupId>net.karneim</groupId>
-			<artifactId>pojobuilder</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.georegression</groupId>
-			<artifactId>georegression</artifactId>
-			<version>0.10</version>
-		</dependency>
-
-		<dependency>
-			<groupId>javax.vecmath</groupId>
-			<artifactId>vecmath</artifactId>
-			<version>1.5.2</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.badlogicgames.gdx</groupId>
-			<artifactId>gdx</artifactId>
-			<version>1.9.2</version>
-		</dependency>
-
-
-		<dependency>
-			<groupId>pl.piteron</groupId>
-			<artifactId>genetic-selectors</artifactId>
-			<version>1.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 </project>

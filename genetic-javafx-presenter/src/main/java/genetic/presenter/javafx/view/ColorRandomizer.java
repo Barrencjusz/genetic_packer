@@ -1,21 +1,18 @@
 package genetic.presenter.javafx.view;
 
-import javafx.scene.paint.Color;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-/**
- * @author piotr.larysz
- */
+import javax.annotation.Resource;
+
+import javafx.scene.paint.Color;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 @Component
 public class ColorRandomizer implements Supplier<Color>, Function<Set<Color>, Color> {
 

@@ -1,5 +1,8 @@
 package genetic.presenter.javafx;
 
+import java.util.concurrent.Future;
+import java.util.function.Consumer;
+
 import genetic.packer.dto.response.ResponseDto;
 import genetic.presenter.rest.AsyncFunction;
 import genetic.presenter.rest.UnsafeAsyncExecutor;
@@ -7,12 +10,6 @@ import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.concurrent.Future;
-import java.util.function.Consumer;
-
-/**
- * @author piotr.larysz
- */
 @Component
 public class Presenter implements Consumer<Stage> {
 

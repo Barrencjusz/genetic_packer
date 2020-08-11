@@ -5,9 +5,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestOperations;
 import org.springframework.web.client.RestTemplate;
 
-/**
- * @author piotr.larysz
- */
 @Configuration
 public class RestConfig {
 

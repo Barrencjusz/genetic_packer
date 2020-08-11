@@ -1,16 +1,10 @@
 package genetic.presenter.javafx.view.controls;
 
 import javafx.scene.PerspectiveCamera;
-import javafx.scene.transform.Rotate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.util.function.Supplier;
-
-/**
- * @author piotr.larysz
- */
 @Component
 public class ControlledPerspectiveCamera extends PerspectiveCamera {
 

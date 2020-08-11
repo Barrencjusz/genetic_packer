@@ -9,9 +9,6 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-/**
- * @author piotr.larysz
- */
 public class GeneticPreloader extends Preloader {
 
     private Stage preloaderStage;

@@ -1,15 +1,14 @@
 package genetic.web;
 
+import java.util.Arrays;
+
 import genetic.packer.GeneticPackerApplication;
 import genetic.packer.Runner;
-import genetic.packer.adapter.FitnessLoggingAdapter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
-
-import java.util.Arrays;
 
 @SpringBootApplication
 @ComponentScan(basePackages = "genetic",

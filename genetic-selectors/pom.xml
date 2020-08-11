@@ -10,7 +10,6 @@
 		<relativePath>../genetic-parent</relativePath>
 	</parent>
 
-	<groupId>pl.piteron</groupId>
 	<artifactId>genetic-selectors</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
@@ -18,32 +17,15 @@
 	<name>genetic-selectors</name>
 	<description>Demo project for Spring Boot</description>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java.version>1.8</java.version>
-	</properties>
-
 	<dependencies>
 		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<version>1.16.8</version>
-			<scope>provided</scope>
+			<groupId>pl.piteron</groupId>
+			<artifactId>genetic-api</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
-			<version>19.0</version>
-		</dependency>
-
-		<dependency>
-			<groupId>net.karneim</groupId>
-			<artifactId>pojobuilder</artifactId>
 		</dependency>
 
 		<dependency>
@@ -51,24 +33,15 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
-		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-all</artifactId>
-			<version>1.10.19</version>
-			<scope>test</scope>
-		</dependency>
-
 	</dependencies>
 	
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
+				<groupId>org.jetbrains.kotlin</groupId>
+				<artifactId>kotlin-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</build>
-	
 
 </project>
