@@ -17,7 +17,7 @@ class IndividualCreatorImpl(
         .sortedBy { it.first }
         .map { (loadingOrder, box) ->
           val rotated = if (box.canBeRotated) random.nextBoolean() else false
-          val x = random.nextInt(embryo.containerWidth + 1 - if (rotated) box.depth else box.width)
+          val x = random.nextInt(embryo.containerWidth - (if (rotated) box.depth else box.width) + 1)
           val y = container.put(box = box, x = x, rotated = rotated)
           PositionedBox(box = box, x = x, y = y, rotated = rotated, loadingOrder = loadingOrder)
         }

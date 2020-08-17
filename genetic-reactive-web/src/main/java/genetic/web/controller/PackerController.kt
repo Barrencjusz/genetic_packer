@@ -1,11 +1,12 @@
 package genetic.web.controller
 
 import genetic.Evolution
-import genetic.api.individual.impl.RatedIndividual
+import org.slf4j.LoggerFactory
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Import
 import org.springframework.http.MediaType
+import org.springframework.http.server.reactive.ServerHttpRequest
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
@@ -26,32 +27,57 @@ class PackerController(
 ) {
 
   @PostMapping("pack", produces = [MediaType.TEXT_EVENT_STREAM_VALUE])
-  fun fluxBoxes(@RequestBody packerRequest: PackerRequest): Flux<RatedIndividual<Body>> {
-    val scale = GreatestCommonDivisorCalculator.calculate(packerRequest.boxes.flatMap { listOf(it.depth, it.width) })
+  fun fluxBoxes(@RequestBody packerRequest: PackerRequest, request: ServerHttpRequest): Flux<PackerResponse> {
+    val scale = GreatestCommonDivisorCalculator.calculate(
+        packerRequest.boxes.flatMap { listOf(it.depth, it.width) }
+    )
+
     val scaledBoxes = packerRequest.boxes.map {
       val depth = it.depth / scale
       Box(
           id = it.id,
           width = it.width / scale,
           depth = depth,
-          canBeRotated = packerRequest.container.width >= depth
+          canBeRotated = packerRequest.container.width >= it.depth
       )
     }
-    val generationSize = (sqrt(packerRequest.boxes.size.toDouble()) * 100).toInt()
+    val generationSize = (sqrt(packerRequest.boxes.size.toDouble()) * 100).toInt() // 100
     val generations = evolution(
         Evolution.Context(
-            numberOfGenerations = 500,
+            numberOfGenerations = 250, // 250
             generationSize = generationSize,
             numberOfEliteIndividuals = generationSize / 10,
             embryo = Embryo(
-                containerWidth = packerRequest.container.width,
-                containerDepth = packerRequest.container.depth,
+                containerWidth = (packerRequest.container.width - (packerRequest.container.width % scale)) / scale,
+                containerDepth = (packerRequest.container.depth - (packerRequest.container.depth % scale)) / scale,
                 boxes = scaledBoxes,
-                minSpace = packerRequest.boxes.fold(0) { space, box -> space + box.width * box.depth }
+                minSpace = scaledBoxes.fold(0) { space, box -> space + box.width * box.depth }
             )
         )
     )
     return Flux.fromStream(generations.asStream())
+        .doOnEach { LOGGER.info("${it.get()?.fitness?.explain()}") }
+        .map { ratedIndividual ->
+          PackerResponse(
+              container = PackerResponse.Container(
+                  boxes = ratedIndividual.body.boxes.map {
+                    PackerResponse.Box(
+                        id = it.box.id,
+                        width = it.box.width * scale,
+                        depth = it.box.depth * scale,
+                        x = it.x * scale,
+                        y = it.y * scale,
+                        rotated = it.rotated
+                    )
+                  }
+              )
+          )
+        }
+  }
+
+  companion object {
+
+    private val LOGGER = LoggerFactory.getLogger(PackerController::class.java)
   }
 }
 
@@ -68,8 +94,22 @@ data class PackerRequest(
 }
 
 data class PackerResponse(
-    val container: RatedIndividual<Box>
-)
+    val container: Container
+) {
+
+  data class Container(
+      val boxes: List<Box>
+  )
+
+  data class Box(
+      val id: Int,
+      val width: Int,
+      val depth: Int,
+      val x: Int,
+      val y: Int,
+      val rotated: Boolean
+  )
+}
 
 interface Size {
   val width: Int

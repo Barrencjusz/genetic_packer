@@ -3,139 +3,113 @@
 <div id="canvasHolder"></div>
 <script src="sse.js"></script>
 <script>
-    let boxes = [
-        {
-            width: 4,
-            depth: 6
-        }, {
-            width: 4,
-            depth: 6
-        }, {
-            width: 4,
-            depth: 6
-        }, {
-            width: 4,
-            depth: 6
-        }, {
-            width: 4,
-            depth: 6
-        }, {
-            width: 4,
-            depth: 6
-        }, {
-            width: 4,
-            depth: 6
-        }, {
-            width: 4,
-            depth: 6
-        }, {
-            width: 4,
-            depth: 6
-        }, {
-            width: 4,
-            depth: 6
-        }, {
-            width: 1,
-            depth: 30
-        }, {
-            width: 4,
-            depth: 6
-        }, {
-            width: 4,
-            depth: 6
-        }, {
-            width: 4,
-            depth: 6
-        }, {
-            width: 4,
-            depth: 6
-        }, {
-            width: 4,
-            depth: 6
-        }, {
-            width: 2,
-            depth: 11
-        }, {
-            width: 2,
-            depth: 11
-        }, {
-            width: 4,
-            depth: 6
-        }, {
-            width: 4,
-            depth: 6
-        }, {
-            width: 4,
-            depth: 6
-        }, {
-            width: 4,
-            depth: 6
-        }, {
-            width: 4,
-            depth: 6
-        }, {
-            width: 4,
-            depth: 6
-        }
-    ];
-    boxes.forEach((value, index) => value.id = index + 1);
+    euro = {
+        width: 80,
+        depth: 120
+    }
+    long = {
+        width: 20,
+        depth: 640
+    }
+    custom = {
+        width: 80,
+        depth: 220
+    }
+    small = {
+        width: 20,
+        depth: 20
+    }
 
-    const canvas = document.createElement('canvas');
-    canvas.id = "canvas"
-    canvas.width = 1000;
-    canvas.height = 1000;
-
-    containerWidth = 13;
-    containerDepth = 68;
-
-    document.getElementById("canvasHolder").appendChild(canvas)
-    const multiplier = 10;
-    const c = document.getElementById("canvas");
-    const ctx = c.getContext("2d");
-    const evtSource = new SSE("/pack", {
-        headers: {'Content-Type': 'application/json'},
-        payload: JSON.stringify({
+    function createSemitrailer() {
+        return {
             container: {
-                width: containerWidth,
-                depth: containerDepth
+                width: 245,
+                depth: 1360
             },
-            boxes: boxes
-        })
-    });
-    evtSource.addEventListener('message', function (event) {
-        ctx.clearRect(0, 0, c.width, c.height);
-        ctx.strokeStyle = "black"
+            boxes: createBoxes(20, 5, 2, 0)
+        }
+    }
 
-        ctx.rect(0, 0, containerWidth * multiplier, containerDepth * multiplier)
-        ctx.stroke();
+    function createSolo() {
+        return {
+            container: {
+                width: 245,
+                depth: 650
+            },
+            boxes: createBoxes(6, 4, 2, 0)
+        }
+    }
 
-        JSON.parse(event.data).body.boxes.forEach(box => {
-            const width = box.rotated ? box.box.depth : box.box.width
-            const depth = box.rotated ? box.box.width : box.box.depth
+    function createBoxes(noEuro, noLong, noCustom, noSmall) {
+        let boxes = Array();
 
-            let rectX = box.x * multiplier;
-            let rectY = box.y * multiplier;
-            let rectWidth = width * multiplier;
-            let rectHeight = depth * multiplier;
+        for (let i = 0; i < noEuro; i++) {
+            boxes.push({...euro})
+        }
+        for (let i = 0; i < noLong; i++) {
+            boxes.push({...long})
+        }
+        for (let i = 0; i < noCustom; i++) {
+            boxes.push({...custom})
+        }
+        for (let i = 0; i < noSmall; i++) {
+            boxes.push({...small})
+        }
+        boxes.forEach((value, index) => value.id = index + 1);
+        return boxes
+    }
 
-            ctx.fillStyle = "#ff0000"
-            ctx.fillRect(rectX, rectY, rectWidth, rectHeight)
-            ctx.beginPath();
+    let semitrailer = createSemitrailer()
+    let solo = createSolo()
 
-            ctx.rect(rectX, rectY, rectWidth, rectHeight)
+    function createVisualisation(id, car) {
+        const multiplier = 0.5;
+        const canvas = document.createElement('canvas');
+        canvas.id = "canvas" + id
+        canvas.width = car.container.width * multiplier + 1;
+        canvas.height = car.container.depth * multiplier + 1 + 200;
+
+        document.getElementById("canvasHolder").appendChild(canvas)
+        const c = document.getElementById(canvas.id);
+        const ctx = c.getContext("2d");
+        const evtSource = new SSE("/pack", {
+            headers: {'Content-Type': 'application/json'},
+            payload: JSON.stringify(car)
+        });
+        evtSource.addEventListener('message', function (event) {
+            ctx.clearRect(0, 0, c.width, c.height);
+            ctx.strokeStyle = "black"
+
+            ctx.rect(0, 0, car.container.width * multiplier, car.container.depth * multiplier)
             ctx.stroke();
 
-            ctx.font = "20px Georgia";
-            ctx.textAlign = "center";
-            ctx.textBaseline = "middle";
-            ctx.fillStyle = "#000000";
-            ctx.fillText(box.box.id, rectX + (rectWidth / 2), rectY + (rectHeight / 2));
+            JSON.parse(event.data).container.boxes.forEach(box => {
+                const width = box.rotated ? box.depth : box.width
+                const depth = box.rotated ? box.width : box.depth
+
+                let rectX = box.x * multiplier;
+                let rectY = box.y * multiplier;
+                let rectWidth = width * multiplier;
+                let rectHeight = depth * multiplier;
+
+                ctx.fillStyle = "#ff0000"
+                ctx.fillRect(rectX, rectY, rectWidth, rectHeight)
+                ctx.beginPath();
+
+                ctx.rect(rectX, rectY, rectWidth, rectHeight)
+                ctx.stroke();
+
+                ctx.font = "20px Georgia";
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+                ctx.fillStyle = "#000000";
+                ctx.fillText(box.id, rectX + (rectWidth / 2), rectY + (rectHeight / 2));
+            })
         })
-    })
-    evtSource.stream()
-    // evtSource.onerror = e => {
-    //     evtSource.close()
-    // };
+        evtSource.stream()
+    }
+    createVisualisation(1, semitrailer)
+    createVisualisation(2, solo)
 </script>
 </body>
 </html>

@@ -32,42 +32,42 @@ class Runner(
   }
 
   //  @OptIn(ExperimentalTime::class)
-//  override fun run(vararg args: String) {
-//    val time = measureTimedValue {
-//      val boxes = listOf(
-//          Box(1, 4, 6),
-//          Box(2, 4, 6),
-//          Box(3, 4, 6),
-//          Box(4, 4, 6),
-//          Box(5, 4, 6),
-//          Box(6, 4, 6),
-//          Box(7, 4, 6),
-//          Box(8, 4, 6),
-//          Box(9, 4, 6),
-//          Box(10, 4, 6),
-//          Box(11, 1, 30),
-//          Box(12, 4, 6)
-//      )
-//      evolution(
-//          Evolution.Context(
-//              numberOfGenerations = 100,
-//              generationSize = (sqrt(boxes.size.toDouble()) * 10).toInt(),
-//              numberOfEliteIndividuals = 2,
-//              embryo = Embryo(
-//                  containerWidth = 3,
-//                  containerDepth = 10,
-//                  boxes = boxes,
-//                  minSpace = boxes.fold(0) { space, box -> space + box.width * box.depth }
-//              )
-//          )
-//      )
-//    }
-//    println("Evolution took ${time.duration}")
-//    println(
-//        objectMapper.writerWithDefaultPrettyPrinter()
-//            .writeValueAsString(time.value)
-//    )
-//  }
+  //  override fun run(vararg args: String) {
+  //    val time = measureTimedValue {
+  //      val boxes = listOf(
+  //          Box(1, 4, 6),
+  //          Box(2, 4, 6),
+  //          Box(3, 4, 6),
+  //          Box(4, 4, 6),
+  //          Box(5, 4, 6),
+  //          Box(6, 4, 6),
+  //          Box(7, 4, 6),
+  //          Box(8, 4, 6),
+  //          Box(9, 4, 6),
+  //          Box(10, 4, 6),
+  //          Box(11, 1, 30),
+  //          Box(12, 4, 6)
+  //      )
+  //      evolution(
+  //          Evolution.Context(
+  //              numberOfGenerations = 100,
+  //              generationSize = (sqrt(boxes.size.toDouble()) * 10).toInt(),
+  //              numberOfEliteIndividuals = 2,
+  //              embryo = Embryo(
+  //                  containerWidth = 3,
+  //                  containerDepth = 10,
+  //                  boxes = boxes,
+  //                  minSpace = boxes.fold(0) { space, box -> space + box.width * box.depth }
+  //              )
+  //          )
+  //      )
+  //    }
+  //    println("Evolution took ${time.duration}")
+  //    println(
+  //        objectMapper.writerWithDefaultPrettyPrinter()
+  //            .writeValueAsString(time.value)
+  //    )
+  //  }
 
 }
 
@@ -136,7 +136,7 @@ class PackerConfiguration : EvolutionAutoConfiguration<Embryo, Body>() {
                 random.nextBoolean()
               } else positionedBox.rotated
               val x = if (random.nextDouble() < probability) {
-                random.nextInt(embryo.containerWidth - if (rotated) positionedBox.box.depth else positionedBox.box.width + 1)
+                random.nextInt(embryo.containerWidth - (if (rotated) positionedBox.box.depth else positionedBox.box.width) + 1)
               } else if (rotated != positionedBox.rotated && (positionedBox.x + if (rotated) positionedBox.box.depth else positionedBox.box.width) > embryo.containerWidth) {
                 embryo.containerWidth - if (rotated) positionedBox.box.depth else positionedBox.box.width
               } else positionedBox.x
@@ -168,49 +168,115 @@ class PackerConfiguration : EvolutionAutoConfiguration<Embryo, Body>() {
     }
   }
 
+  //  @Bean
+  //  fun fitnessTester(objectMapper: ObjectMapper) = object : FitnessTester<Body, Embryo> {
+  //
+  //    override fun invoke(individual: Individual<Body>, embryo: Embryo): TranslatedFitness<*> {
+  //      val statistics = individual.body.container.generateStatistics()
+  //      return ContainerFitness(
+  //          components = ContainerFitness.Components(
+  //              depthScore = (1.0 / statistics.usedDepth).pow(0.95) * 20000,
+  //              usedSpaceScore = 1.0 / (statistics.usedSpace.toDouble() / embryo.minSpace) * 200,
+  //              usedWidthScore = 1.0 / (statistics.usedWidth.toDouble() / embryo.containerWidth) * 20,
+  //              deepestMiddleEdgeScore = (statistics.deepestMiddleEdge * embryo.containerWidth.toDouble() / embryo.minSpace) * 10,
+  //              depressionLengthScore = (1.0 / statistics.depressionLength.toDouble()) * 500,
+  //              numberOfEdgesScore = 1.0 / statistics.numberOfEdges / 10,
+  //              historyOfEdgesScore = {
+  //                var previous = 0
+  //                statistics.historyOfEdges.fold(1.0) { acc, current ->
+  //                  val score = if (previous < current) 1.0 else 1.1
+  //                  previous = current
+  //                  acc * score
+  //                }
+  //              }(),
+  //              totalDistanceFromUsedDepthScore = 1.0 / (statistics.totalDistanceFromUsedDepth + 1)
+  //          ),
+  //          totalFitnessTranslator = object : FitnessTranslator<ContainerFitness, Double> {
+  //
+  //            override fun apply(fitness: ContainerFitness) =
+  //                fitness.components.depthScore +
+  //                    fitness.components.usedSpaceScore +
+  //                    fitness.components.usedWidthScore +
+  //                    fitness.components.deepestMiddleEdgeScore + /*deepestEdgeScore +*/
+  //                    fitness.components.depressionLengthScore +
+  //                    fitness.components.numberOfEdgesScore +
+  //                    fitness.components.historyOfEdgesScore +
+  //                    fitness.components.totalDistanceFromUsedDepthScore
+  //          },
+  //          fitnessExplainedTranslator = object : FitnessTranslator<ContainerFitness, String> {
+  //
+  //            override fun apply(fitness: ContainerFitness) = objectMapper.writerWithDefaultPrettyPrinter()
+  //                .writeValueAsString(fitness.components)
+  //          }
+  //      )
+  //    }
+  //  }
+
   @Bean
-  fun fitnessTester() = object : FitnessTester<Body, Embryo> {
+  fun fitnessTester(objectMapper: ObjectMapper) = object : FitnessTester<Body, Embryo> {
 
-    override fun invoke(individual: Individual<Body>, embryo: Embryo): TranslatedFitness<*> = SomeTranslatedFitness(
-        object : FitnessTranslator<SomeTranslatedFitness, Double> {
+    override fun invoke(individual: Individual<Body>, embryo: Embryo): TranslatedFitness<*> {
+      val statistics = individual.body.container.generateStatistics()
+      return ContainerFitness(
+          components = ContainerFitness.Components(
+              depthScore = embryo.containerDepth / statistics.usedDepth.toDouble().pow(1.2),
+              numberOfBoxesThatWastedSpaceScore = individual.body.boxes.size / (statistics.numberOfBoxesThatWastedSpace.toDouble() + 1),
+              usedSpaceScore = embryo.minSpace / statistics.usedSpace.toDouble(),
+              usedWidthScore = embryo.containerWidth / statistics.usedWidth.toDouble(),
+              deepestMiddleEdgeScore = statistics.deepestMiddleEdge / statistics.usedDepth.toDouble(),
+              depressionLengthScore = 1.0 / statistics.depressionLength,
+              numberOfEdgesScore = 1.0 / statistics.numberOfEdges,
+//              historyOfEdgesScore = {
+//                var previous = 0
+//                statistics.historyOfEdges.fold(1.0) { acc, current ->
+//                  val score = if (previous < current) 1.0 else 1.1
+//                  previous = current
+//                  acc * score
+//                }
+//              }(),
+              totalDistanceFromUsedDepthScore = 1.0 / (statistics.totalDistanceFromUsedDepth + 1)
+          ),
+          totalFitnessTranslator = object : FitnessTranslator<ContainerFitness, Double> {
 
-          override fun apply(fitness: SomeTranslatedFitness) = with(individual.body.container.generateStatistics()) {
+            override fun apply(fitness: ContainerFitness) =
+                fitness.components.depthScore *
+                    (1 + fitness.components.usedSpaceScore / 5) *
+                    (1 + fitness.components.numberOfBoxesThatWastedSpaceScore / 30) *
+                    //(1 + fitness.components.usedWidthScore / 100) *
+                    (1 + fitness.components.deepestMiddleEdgeScore / 200) * /*deepestEdgeScore +*/
+                    (1 + fitness.components.depressionLengthScore / 300) *
+                    (1 + fitness.components.numberOfEdgesScore / 400) *
+//                    (1 + fitness.components.historyOfEdgesScore / 1000) *
+                    (1 + fitness.components.totalDistanceFromUsedDepthScore / 5000)
+          },
+          fitnessExplainedTranslator = object : FitnessTranslator<ContainerFitness, String> {
 
-            val depthScore = (1.0 / this.usedDepth).pow(0.1) * 1000
-            val usedSpaceScore = 1.0 / (this.usedSpace.toDouble() / embryo.minSpace) * 200
-            val usedWidthScore = 1.0 / (this.usedWidth.toDouble() / embryo.containerWidth)
-            val deepestMiddleEdgeScore =
-                (this.deepestMiddleEdge * embryo.containerWidth.toDouble() / embryo.minSpace) * 10
-            //                  val deepestEdgeScore = this.deepestEdge * embryo.containerWidth.toDouble() / embryo.minSpace
-            val depressionLengthScore = (1.0 / this.depressionLength.toDouble()) * 100
-            val numberOfEdgesScore = 1.0 / this.numberOfEdges / 10
-            val historyOfEdgesScore = {
-              var previous = 0
-              this.historyOfEdges.fold(1.0) { acc, current ->
-                val score = if (previous < current) 1.0 else 1.1
-                previous = current
-                acc * score
-              }
-            }()
-            val totalScore =
-                depthScore + usedSpaceScore + usedWidthScore + deepestMiddleEdgeScore + /*deepestEdgeScore +*/ depressionLengthScore + numberOfEdgesScore + historyOfEdgesScore
-            totalScore
+            override fun apply(fitness: ContainerFitness) = objectMapper.writerWithDefaultPrettyPrinter()
+                .writeValueAsString(fitness.components) + "\nTotal score: ${fitness.score}"
           }
-        },
-        object : FitnessTranslator<SomeTranslatedFitness, String> {
-
-          override fun apply(fitness: SomeTranslatedFitness) = "what what"
-        }
-    )
+      )
+    }
   }
 
-  class SomeTranslatedFitness(
-      totalFitnessTranslator: FitnessTranslator<SomeTranslatedFitness, Double>,
-      fitnessExplainedTranslator: FitnessTranslator<SomeTranslatedFitness, String>
-  ) : TranslatedFitness<SomeTranslatedFitness>(totalFitnessTranslator, fitnessExplainedTranslator) {
-    override fun self(): SomeTranslatedFitness {
-      return this
-    }
+  class ContainerFitness(
+      val components: Components,
+      totalFitnessTranslator: FitnessTranslator<ContainerFitness, Double>,
+      fitnessExplainedTranslator: FitnessTranslator<ContainerFitness, String>
+  ) : TranslatedFitness<ContainerFitness>(totalFitnessTranslator, fitnessExplainedTranslator) {
+
+    override fun self() = this
+
+    data class Components(
+        val depthScore: Double,
+        val usedSpaceScore: Double,
+        val numberOfBoxesThatWastedSpaceScore: Double,
+        val usedWidthScore: Double,
+        val deepestMiddleEdgeScore: Double, /*deepestEdgeScore,*/
+        val depressionLengthScore: Double,
+        val numberOfEdgesScore: Double,
+        //val historyOfEdgesScore: Double,
+        val totalDistanceFromUsedDepthScore: Double
+    )
   }
 
   @Bean
